@@ -1,4 +1,4 @@
-package com.example.fx123;
+package com.jomariabejo;
 
 public class Deduction {
     private final double basic_salary;

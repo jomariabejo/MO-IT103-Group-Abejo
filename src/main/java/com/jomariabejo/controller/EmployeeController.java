@@ -1,4 +1,4 @@
-package com.example.fx123;
+package com.jomariabejo;
 
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -12,7 +12,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;

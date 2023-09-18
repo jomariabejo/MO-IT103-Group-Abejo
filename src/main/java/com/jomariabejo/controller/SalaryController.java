@@ -1,4 +1,4 @@
-package com.example.fx123;
+package com.jomariabejo;
 
 import java.io.IOException;
 import java.text.DecimalFormat;

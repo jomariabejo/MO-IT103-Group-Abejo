@@ -1,15 +1,14 @@
-package com.example.fx123;
+package com.jomariabejo;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import javafx.animation.PauseTransition;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.util.Duration;
 
 public class LoginController {
     @FXML private TextField txtField_employeeNumber;
