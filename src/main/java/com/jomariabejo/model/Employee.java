@@ -1,162 +1,253 @@
-package com.jomariabejo;
+package com.jomariabejo.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
-public class Employees {
-    public static ArrayList<Employees> records = new ArrayList<>();
-    private final String id;
-    private final String l_name;
-    private final String f_name;
-    private final String birthday;
-    private final String address;
-    private final String phone_num;
-    private final String sss_num;
-    private final String philhealth_num;
-    private final String tin_num;
-    private final String pagibig_num;
-    private final String status;
-    private final String position;
-    private final String immediate_supervisor;
+import java.math.BigDecimal;
+import java.util.Date;
 
-    private final int basic_salary;
-    private final int rice_subsidy;
-    private final int phone_alw;
-    private final int clothing_alw;
-    private final int gross_semi_monthly_rate;
-    private final float hourly_rate;
+@Entity
+@Table(name = "Employee")
+public class Employee {
 
-    public String getId() {
-        return id;
+    @Id
+    @Column(name = "employeeNumber")
+    private int employeeNumber;
+
+    @Column(name = "lastName")
+    private String lastName;
+
+    @Column(name = "firstName")
+    private String firstName;
+
+    @Column(name = "birthday")
+    private Date birthday;
+
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "phoneNumber")
+    private String phoneNumber;
+
+    @Column(name = "sssNumber")
+    private String sssNumber;
+
+    @Column(name = "philhealthNumber")
+    private String philhealthNumber;
+
+    @Column(name = "tinNumber")
+    private String tinNumber;
+
+    @Column(name = "pagIbigNumber")
+    private String pagIbigNumber;
+
+    @Column(name = "status")
+    private String status;
+
+    @Column(name = "position")
+    private String position;
+
+    @Column(name = "immediateSupervisor")
+    private String immediateSupervisor;
+
+    @Column(name = "basicSalary")
+    private BigDecimal basicSalary;
+
+    @Column(name = "riceSubsidy")
+    private BigDecimal riceSubsidy;
+
+    @Column(name = "phoneAllowance")
+    private BigDecimal phoneAllowance;
+
+    @Column(name = "clothingAllowance")
+    private BigDecimal clothingAllowance;
+
+    @Column(name = "grossSemiMonthlyRate")
+    private BigDecimal grossSemiMonthlyRate;
+
+    @Column(name = "hourlyRate")
+    private BigDecimal hourlyRate;
+
+    // Constructors, getters, and setters
+    // ...
+
+    public Employee(int employeeNumber, String lastName, String firstName, Date birthday, String address, String phoneNumber, String sssNumber, String philhealthNumber, String tinNumber, String pagIbigNumber, String status, String position, String immediateSupervisor, BigDecimal basicSalary, BigDecimal riceSubsidy, BigDecimal phoneAllowance, BigDecimal clothingAllowance, BigDecimal grossSemiMonthlyRate, BigDecimal hourlyRate) {
+        this.employeeNumber = employeeNumber;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.birthday = birthday;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.sssNumber = sssNumber;
+        this.philhealthNumber = philhealthNumber;
+        this.tinNumber = tinNumber;
+        this.pagIbigNumber = pagIbigNumber;
+        this.status = status;
+        this.position = position;
+        this.immediateSupervisor = immediateSupervisor;
+        this.basicSalary = basicSalary;
+        this.riceSubsidy = riceSubsidy;
+        this.phoneAllowance = phoneAllowance;
+        this.clothingAllowance = clothingAllowance;
+        this.grossSemiMonthlyRate = grossSemiMonthlyRate;
+        this.hourlyRate = hourlyRate;
     }
 
-    public String getL_name() {
-        return l_name;
+    public Employee() {
+
     }
 
-    public String getF_name() {
-        return f_name;
+    public int getEmployeeNumber() {
+        return employeeNumber;
     }
 
-    public String getBirthday() {
+    public void setEmployeeNumber(int employeeNumber) {
+        this.employeeNumber = employeeNumber;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public Date getBirthday() {
         return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 
     public String getAddress() {
         return address;
     }
 
-    public String getPhone_num() {
-        return phone_num;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getSss_num() {
-        return sss_num;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public String getPhilhealth_num() {
-        return philhealth_num;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public String getTin_num() {
-        return tin_num;
+    public String getSssNumber() {
+        return sssNumber;
     }
 
-    public String getPagibig_num() {
-        return pagibig_num;
+    public void setSssNumber(String sssNumber) {
+        this.sssNumber = sssNumber;
+    }
+
+    public String getPhilhealthNumber() {
+        return philhealthNumber;
+    }
+
+    public void setPhilhealthNumber(String philhealthNumber) {
+        this.philhealthNumber = philhealthNumber;
+    }
+
+    public String getTinNumber() {
+        return tinNumber;
+    }
+
+    public void setTinNumber(String tinNumber) {
+        this.tinNumber = tinNumber;
+    }
+
+    public String getPagIbigNumber() {
+        return pagIbigNumber;
+    }
+
+    public void setPagIbigNumber(String pagIbigNumber) {
+        this.pagIbigNumber = pagIbigNumber;
     }
 
     public String getStatus() {
         return status;
     }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public String getPosition() {
         return position;
     }
 
-    public String getImmediate_supervisor() {
-        return immediate_supervisor;
-    }
-
-    public int getBasic_salary() {
-        return basic_salary;
-    }
-
-    public int getRice_subsidy() {
-        return rice_subsidy;
-    }
-
-    public int getPhone_alw() {
-        return phone_alw;
-    }
-
-    public int getClothing_alw() {
-        return clothing_alw;
-    }
-
-    public int getGross_semi_monthly_rate() {
-        return gross_semi_monthly_rate;
-    }
-
-    public float getHourly_rate() {
-        return hourly_rate;
-    }
-
-    Employees(String id, String lName, String fName, String birthDate,
-              String address, String phoneNumber, String sssNumber,
-              String philhealthNumber, String tinNumber, String pagibigNumber,
-              String status, String position, String immediateSupervisor,
-              int basicSalary, int riceSubsidy, int phoneAlw, int clothAlw,
-              int grossSemiMonthlyRate, float hourlyRate) {
-        this.id = id;
-        this.l_name = lName;
-        this.f_name = fName;
-        this.birthday = birthDate;
-        this.address = address;
-        this.phone_num = phoneNumber;
-        this.sss_num = sssNumber;
-        this.philhealth_num = philhealthNumber;
-        this.tin_num = tinNumber;
-        this.pagibig_num = pagibigNumber;
-        this.status = status;
+    public void setPosition(String position) {
         this.position = position;
-        this.immediate_supervisor = immediateSupervisor;
-        this.basic_salary = basicSalary;
-        this.rice_subsidy = riceSubsidy;
-        this.phone_alw = phoneAlw;
-        this.clothing_alw = clothAlw;
-        this.gross_semi_monthly_rate = grossSemiMonthlyRate;
-        this.hourly_rate = hourlyRate;
     }
 
-    public static void clearEmployees() {
-        records.clear();
+    public String getImmediateSupervisor() {
+        return immediateSupervisor;
     }
 
-    public static void addAllEmployees() {
-        CsvUtils.addAllEmployee();
+    public void setImmediateSupervisor(String immediateSupervisor) {
+        this.immediateSupervisor = immediateSupervisor;
     }
 
-    @Override
-    public String toString() {
-        return "Employee{"
-                + "id='" + id + '\'' + ", l_name='" + l_name + '\'' + ", f_name='"
-                + f_name + '\'' + ", birthday='" + birthday + '\'' + ", address='"
-                + address + '\'' + ", phone_num='" + phone_num + '\'' + ", sss_num='"
-                + sss_num + '\'' + ", philhealth_num='" + philhealth_num + '\''
-                + ", tin_num='" + tin_num + '\'' + ", pagibig_num='" + pagibig_num
-                + '\'' + ", status='" + status + '\'' + ", position='" + position + '\''
-                + ", immediate_supervisor='" + immediate_supervisor + '\''
-                + ", basic_salary=" + basic_salary + ", rice_subsidy=" + rice_subsidy
-                + ", phone_alw=" + phone_alw + ", clothing_alw=" + clothing_alw
-                + ", gross_semi_rate=" + gross_semi_monthly_rate
-                + ", hourly_rate=" + hourly_rate + '}';
+    public BigDecimal getBasicSalary() {
+        return basicSalary;
     }
 
-    public static int[] employeeNumbers() {
-        int [] arr_employee_numbers = new int[records.size()];
-        for (int c = 0; c < arr_employee_numbers.length; c++)
-            arr_employee_numbers[c] = Integer.valueOf(records.get(c).getId());
-        return arr_employee_numbers;
+    public void setBasicSalary(BigDecimal basicSalary) {
+        this.basicSalary = basicSalary;
+    }
+
+    public BigDecimal getRiceSubsidy() {
+        return riceSubsidy;
+    }
+
+    public void setRiceSubsidy(BigDecimal riceSubsidy) {
+        this.riceSubsidy = riceSubsidy;
+    }
+
+    public BigDecimal getPhoneAllowance() {
+        return phoneAllowance;
+    }
+
+    public void setPhoneAllowance(BigDecimal phoneAllowance) {
+        this.phoneAllowance = phoneAllowance;
+    }
+
+    public BigDecimal getClothingAllowance() {
+        return clothingAllowance;
+    }
+
+    public void setClothingAllowance(BigDecimal clothingAllowance) {
+        this.clothingAllowance = clothingAllowance;
+    }
+
+    public BigDecimal getGrossSemiMonthlyRate() {
+        return grossSemiMonthlyRate;
+    }
+
+    public void setGrossSemiMonthlyRate(BigDecimal grossSemiMonthlyRate) {
+        this.grossSemiMonthlyRate = grossSemiMonthlyRate;
+    }
+
+    public BigDecimal getHourlyRate() {
+        return hourlyRate;
+    }
+
+    public void setHourlyRate(BigDecimal hourlyRate) {
+        this.hourlyRate = hourlyRate;
     }
 }

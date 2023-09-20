@@ -1,16 +1,8 @@
-package com.jomariabejo;
+package com.jomariabejo.model;
 
 public class Deduction {
     private final double basic_salary;
     private final double gross_salary;
-
-    public double getBasic_salary() {
-        return basic_salary;
-    }
-
-    public double getGross_salary() {
-        return gross_salary;
-    }
 
     public Deduction(double basicSalary, double grossSalary) {
         this.basic_salary = basicSalary;

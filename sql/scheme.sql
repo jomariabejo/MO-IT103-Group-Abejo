@@ -25,6 +25,20 @@ CREATE TABLE Employee
 );
 
 -- Start employee number to 10_001
+CREATE TABLE User (
+                      user_id INT AUTO_INCREMENT PRIMARY KEY,
+                      username VARCHAR(255) NOT NULL,
+                      password VARCHAR(255) NOT NULL,
+                      email VARCHAR(255) NOT NULL,
+                      role ENUM('Employee', 'Customer') NOT NULL,
+                      first_name VARCHAR(255),
+                      last_name VARCHAR(255),
+                      date_of_birth DATE,
+                      address VARCHAR(255),
+                      phone_number VARCHAR(15),
+                      employee_id INT,  -- Employee-specific field
+                      customer_id INT   -- Customer-specific field
+);
 ALTER TABLE Employee AUTO_INCREMENT = 10001;
 
 -- Sample
@@ -39,4 +53,20 @@ CREATE TABLE Attendance
     timeIn         TIME,
     timeOut        TIME
 );
+
+CREATE TABLE `Leave`
+(
+    leave_id    INT AUTO_INCREMENT PRIMARY KEY,
+    firstName   VARCHAR(255),
+    lastName    VARCHAR(255),
+    date        DATE,
+    type        ENUM('Vacation', 'Sick', 'Emergency'),
+    description VARCHAR(255)
+);
+
+
+
+
+
+
 

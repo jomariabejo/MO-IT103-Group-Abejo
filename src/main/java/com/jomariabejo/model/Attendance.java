@@ -1,89 +1,108 @@
-package com.jomariabejo;
+package com.jomariabejo.model;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
+import jakarta.persistence.*;
+
 import java.util.Date;
+import java.sql.Time;
 
+@Entity
+@Table(name = "Attendance")
 public class Attendance {
-    public static ArrayList<Attendance> records = new ArrayList<>();
-    private int employee_number;
-    private String l_name;
-    private String f_name;
-    private String date;
-    private String timeIn;
-    private String timeOut;
 
-    public Attendance(int employeeNumber, String lastName, String firstName,
-                      String date, String timeIn, String timeOut) {
-        this.employee_number = employeeNumber;
-        this.l_name = lastName;
-        this.f_name = firstName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+
+    @Column(name = "employeeNumber")
+    private int employeeNumber;
+
+    @Column(name = "lastName")
+    private String lastName;
+
+    @Column(name = "firstName")
+    private String firstName;
+
+    @Column(name = "date")
+    private Date date;
+
+    @Column(name = "timeIn")
+    private Time timeIn;
+
+    @Column(name = "timeOut")
+    private Time timeOut;
+
+    // Constructors, getters, and setters
+    // ...
+
+
+    public Attendance() {
+    }
+
+    public Attendance(int id, int employeeNumber, String lastName, String firstName, Date date, Time timeIn, Time timeOut) {
+        this.id = id;
+        this.employeeNumber = employeeNumber;
+        this.lastName = lastName;
+        this.firstName = firstName;
         this.date = date;
         this.timeIn = timeIn;
         this.timeOut = timeOut;
     }
 
-    public int getEmployee_number() {
-        return employee_number;
+
+    public int getId() {
+        return id;
     }
 
-    public String getL_name() {
-        return l_name;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getF_name() {
-        return f_name;
+    public int getEmployeeNumber() {
+        return employeeNumber;
     }
 
-    public String getDate() {
+    public void setEmployeeNumber(int employeeNumber) {
+        this.employeeNumber = employeeNumber;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public Date getDate() {
         return date;
     }
 
-    public String getTimeIn() {
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Time getTimeIn() {
         return timeIn;
     }
 
-    public String getTimeOut() {
+    public void setTimeIn(Time timeIn) {
+        this.timeIn = timeIn;
+    }
+
+    public Time getTimeOut() {
         return timeOut;
     }
 
-    @Override
-    public String toString() {
-        return "Attendance{"
-                + "employee_number=" + employee_number + ", lName='" + l_name + '\''
-                + ", fName='" + f_name + '\'' + ", date=" + date + ", timeIn=" + timeIn
-                + ", timeOut=" + timeOut + '}';
-    }
-
-    public static void addAllAttendanceRecord() {
-        CsvUtils.addAllAttendanceRecord();
-    }
-
-    public static void clearAttendanceRecord() {
-        records.clear();
-    }
-
-    public String getFullName() {
-        return f_name + " " + l_name;
-    }
-
-    public String toCommaSeparatedValueString () {
-        return (String.valueOf(employee_number)
-                + ","
-                + l_name
-                + ","
-                + f_name
-                + ","
-                + date
-                + ","
-                + timeIn
-                + ","
-                + timeOut);
+    public void setTimeOut(Time timeOut) {
+        this.timeOut = timeOut;
     }
 }

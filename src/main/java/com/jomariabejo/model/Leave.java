@@ -1,162 +1,102 @@
-package com.jomariabejo;
+package com.jomariabejo.model;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
+import jakarta.persistence.*;
+
 import java.util.Date;
-import java.util.List;
 
-public class Leaves {
-    private int eid;
-    private String last_name, first_name, leave_type;
-    private String leave_date;
+@Entity
+@Table(name = "Leave")
+public class Leave {
 
-    public static final int MAX_SICK_LEAVES = 5, MAX_VACATION_LEAVES = 10,
-            MAX_EMERGENCY_LEAVES = 5;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "leave_id")
+    private int leaveId;
 
-    public static List<Leaves> RECORDS = new ArrayList<>();
-    public static SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+    @Column(name = "firstName")
+    private String firstName;
 
-    public int getEid() {
-        return eid;
+    @Column(name = "lastName")
+    private String lastName;
+
+    @Column(name = "date")
+    private Date date;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
+    private LeaveType type;
+
+    @Column(name = "description")
+    private String description;
+
+    // Constructors, getters, and setters
+    // ...
+
+
+    public Leave(int leaveId, String firstName, String lastName, Date date, LeaveType type, String description) {
+        this.leaveId = leaveId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.date = date;
+        this.type = type;
+        this.description = description;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public Leave() {
+
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public int getLeaveId() {
+        return leaveId;
     }
 
-    public String getLeave_type() {
-        return leave_type;
+    public void setLeaveId(int leaveId) {
+        this.leaveId = leaveId;
     }
 
-    public String getLeave_date() {
-        return leave_date;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public Leaves(int employeeNumber, String lname, String fname,
-                  String leaveType, String leaveDate) {
-        this.eid = employeeNumber;
-        this.last_name = lname;
-        this.first_name = fname;
-        this.leave_type = leaveType;
-        this.leave_date = leaveDate;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public static void addAllLeaves() {
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(MainApp.LEAVE_CSV));
-            boolean headers = true;
-            String line;
-
-            while ((line = br.readLine()) != null) {
-                String[] arr = line.split(",");
-
-                // skip headers
-                if (headers) {
-                    headers = false;
-                    continue;
-                }
-
-                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-
-                Leaves sl = new Leaves(Integer.valueOf(arr[0]), arr[1],
-                        arr[2], arr[3], arr[4]);
-                RECORDS.add(sl);
-
-            }
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public String getLastName() {
+        return lastName;
     }
 
-    public void createEmployeeLeave() throws ParseException {
-        if (true) {
-            try {
-                BufferedWriter writer =
-                        new BufferedWriter(new FileWriter(MainApp.LEAVE_CSV, true));
-                writer.write(toCommaString());
-                writer.newLine();
-                writer.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        } else {
-            System.err.println("Employee exceeds credit limit");
-        }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-
-    public boolean isEmployeeNumberExist() {
-        for (int i = 0; i < Employees.records.size(); i++) {
-            if (Employees.records.get(i).getId().equals(String.valueOf(eid))) {
-                return true;
-            }
-        }
-        return false;
+    public Date getDate() {
+        return date;
     }
 
-
-    public String getLeaveType() {
-        switch (leave_type.toLowerCase()) {
-            case "emergency":
-                return "Emergency";
-            case "sick":
-                return "Sick";
-            case "acation":
-                return "Vacation";
-        }
-        return "leave type doesn't exist";
+    public void setDate(Date date) {
+        this.date = date;
     }
 
-    @Override
-    public String toString() {
-        return "SetLeave{"
-                + "eid=" + eid + ", last_name='" + last_name + ',' + ", first_name='"
-                + first_name + ',' + ", leave_type='" + leave_type + ','
-                + ", leave_start=" + leave_date +'}';
+    public LeaveType getType() {
+        return type;
     }
 
-    public String toCommaString() {
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-        String leave_date = (this.leave_date);
-
-        return eid + "," + last_name + "," + first_name + "," + leave_type + ","
-                + leave_date;
+    public void setType(LeaveType type) {
+        this.type = type;
     }
 
-    public String getConsumedCredits() throws ParseException {
-        int emergency_counter = 0, sick_counter = 0, vacation_counter = 0;
+    public String getDescription() {
+        return description;
+    }
 
-        for (int i = 0; i < Leaves.RECORDS.size(); i++) {
-            if (eid == Leaves.RECORDS.get(i).getEid()) {
-                Calendar leave_date = Calendar.getInstance();
-                Date date_leave = sdf.parse(Leaves.RECORDS.get(i).getLeave_date());
-                leave_date.setTime(date_leave);
-                String dateString = Leaves.RECORDS.get(i).leave_date;
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-                switch (Leaves.RECORDS.get(i).leave_type.toLowerCase()) {
-                    case "sick" -> sick_counter++;
-                    case "vacation" -> vacation_counter++;
-                    case "emergency" -> emergency_counter++;
-                }
-            }
-        }
-        System.out.println("emergency = "+emergency_counter);
-        System.out.println("sick = "+sick_counter);
-        System.out.println("vacation = "+vacation_counter);
-        return emergency_counter+"\t"+sick_counter+"\t"+vacation_counter;
+    public enum LeaveType {
+        Vacation,
+        Sick,
+        Emergency
     }
 }

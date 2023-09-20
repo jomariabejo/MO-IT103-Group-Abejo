@@ -1,6 +1,11 @@
 package com.jomariabejo;
 
 import java.io.IOException;
+
+import com.jomariabejo.controller.AttendanceController;
+import com.jomariabejo.controller.LeavesController;
+import com.jomariabejo.controller.LoginController;
+import com.jomariabejo.controller.SalaryController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
