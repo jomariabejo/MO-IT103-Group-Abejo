@@ -1,5 +1,6 @@
 package com.jomariabejo;
 
+import com.jomariabejo.repository.EmployeeRepository;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,6 +23,7 @@ public class MainApp extends Application {
     }
 
     public static void main(String[] args) {
-        launch(args);
+//        launch(args);
+        System.out.println(EmployeeRepository.getAllEmployee().size());
     }
 }

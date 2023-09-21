@@ -10,6 +10,8 @@ import java.util.Date;
 import com.jomariabejo.repository.EmployeeRepository;
 import com.jomariabejo.SceneController;
 import com.jomariabejo.model.Employee;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -166,7 +168,11 @@ public class EmployeeController implements Runnable {
 
     @Override
     public void run() {
+        ObservableList<Employee> list = FXCollections.observableArrayList(EmployeeRepository.getAllEmployee());
+        employeeTable.setItems(list);
+        lbl_employeeSize.setText(EmployeeRepository.getEmployeeSize());
 
+        tableViewSelectedItemListener();
     }
 
     public void onAttendanceClicked(ActionEvent event) throws IOException {

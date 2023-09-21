@@ -7,6 +7,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class EmployeeRepository {
     public static void createEmployee(Employee employee) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -59,7 +62,6 @@ public class EmployeeRepository {
         try {
             session.beginTransaction();
 
-            // Assuming your Employee class has a unique ID field called "id"
             employee = session.get(Employee.class, employeeId);
 
             session.getTransaction().commit();
@@ -150,5 +152,26 @@ public class EmployeeRepository {
         }
     }
 
+    public static List<Employee> getAllEmployee() {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.getCurrentSession();
+        List<Employee> list = new ArrayList<>();
 
+        try {
+            session.beginTransaction();
+
+            String hql = "SELECT c FROM Employee c";
+
+            list = session.createQuery(hql, Employee.class).getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            return list;
+        }
+    }
+
+
+    public static String getEmployeeSize() {
+        return null;
+    }
 }
