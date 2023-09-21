@@ -1,37 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!--
-  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
-  All rights reserved. Use is subject to license terms.
-
-  This file is available and licensed under the following license:
-
-  Redistribution and use in source and binary forms, with or without
-  modification, are permitted provided that the following conditions
-  are met:
-
-  - Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
-  - Redistributions in binary form must reproduce the above copyright
-    notice, this list of conditions and the following disclaimer in
-    the documentation and/or other materials provided with the distribution.
-  - Neither the name of Oracle Corporation nor the names of its
-    contributors may be used to endorse or promote products derived
-    from this software without specific prior written permission.
-
-  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
--->
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
@@ -46,7 +14,6 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Blend?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -55,7 +22,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.controller.EmployeeController">
+<VBox minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.controller.EmployeeController">
     <children>
         <MenuBar minWidth="800.0" VBox.vgrow="NEVER">
             <menus>
@@ -116,7 +83,7 @@
                <children>
                   <HBox>
                      <children>
-                              <Button fx:id="btn_employee" mnemonicParsing="false" onAction="#refreshEmployeeScene" text="Employee">
+                              <Button fx:id="btn_employee" mnemonicParsing="false" onAction="#onEmployeeClicked" text="Employee">
                                   <font>
                                       <Font size="15.0" />
                                   </font>
@@ -179,7 +146,7 @@
                             <Color red="0.625" green="0.625" blue="0.625" fx:id="x41" />
                         </textFill>
                     </Label>
-                    <TextField fx:id="tf_search" onAction="#filterTableData" prefHeight="25.0" prefWidth="206.0" promptText="ex: 10001" />
+                    <TextField onAction="#textField_SearchBar" prefHeight="25.0" prefWidth="206.0" promptText="ex: 10001" />
             </children>
             <padding>
                 <Insets bottom="20.0" left="3.0" right="3.0" top="10.0" />
@@ -200,17 +167,16 @@
                                 <Color red="0.624" green="0.624" blue="0.624" fx:id="x2" />
                             </textFill>
                         </Label>
-                        <Button fx:id="btn_addNewEmployee" alignment="TOP_LEFT" layoutX="5.0" layoutY="57.0" mnemonicParsing="false" onAction="#createEmployee" text="Add New Employee" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                        <Button alignment="TOP_LEFT" layoutX="5.0" layoutY="57.0" mnemonicParsing="false" onAction="#onAddNewEmployeeClicked" text="Add New Employee" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                             <font>
                                 <Font name="Arial" size="15.0" />
                             </font>
                         </Button>
-                        <Button fx:id="btn_deleteSelectedEmployee" alignment="TOP_LEFT" disable="true" layoutX="10.0" layoutY="91.0" mnemonicParsing="false" onAction="#onDeleteEmployeeClicked" text="Delete Employee" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                        <Button alignment="TOP_LEFT" layoutX="10.0" layoutY="91.0" mnemonicParsing="false" onAction="#onDeleteEmployeeClicked" text="Delete Employee" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                             <font>
                                 <Font name="Arial" size="15.0" />
                             </font>
                         </Button>
-                  <Button alignment="TOP_LEFT" contentDisplay="RIGHT" layoutX="14.0" layoutY="468.0" mnemonicParsing="false" onAction="#onActionViewDetails" prefHeight="25.0" prefWidth="206.0" text="View Details" />
                     </children>
                 </AnchorPane>
                     <TableView fx:id="employeeTable" stylesheets="@stylesheet/style.css">
@@ -230,8 +196,8 @@
                             <TableColumn fx:id="immediate_supervisor" prefWidth="150.0" text="Immdiate Supervisor" />
                             <TableColumn fx:id="basic_salary" prefWidth="75.0" text="Basic Salary" />
                             <TableColumn fx:id="rice_subsidy" prefWidth="75.0" text="Rice Subsidy" />
-                            <TableColumn fx:id="phone_alw" prefWidth="75.0" text="Phone Allowance" />
-                            <TableColumn fx:id="clothing_alw" prefWidth="75.0" text="Clothing Allowance" />
+                            <TableColumn fx:id="phone_allowance" prefWidth="75.0" text="Phone Allowance" />
+                            <TableColumn fx:id="clothing_allowance" prefWidth="75.0" text="Clothing Allowance" />
                             <TableColumn fx:id="gross_semi_monthly_rate" prefWidth="75.0" text="Gross Semi-Monthly Rate" />
                             <TableColumn fx:id="hourly_rate" prefWidth="75.0" text="Hourly Rate" />
                         </columns>
@@ -239,14 +205,14 @@
                 <AnchorPane maxWidth="200.0" minWidth="200.0">
                     <children>
 
-                        <Button fx:id="btn_saveOrUpdate" disable="true" layoutX="10.0" layoutY="33.0" mnemonicParsing="false" onAction="#onSaveEmployeeClicked" text="Save" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
-                        <Button fx:id="btn_cancel" disable="true" layoutX="20.0" layoutY="43.0" mnemonicParsing="false" onAction="#resetDetailsTextField" text="Cancel" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0" />
+                        <Button fx:id="btn_saveOrUpdate" layoutX="10.0" layoutY="33.0" mnemonicParsing="false" onAction="#onSaveButtonClicked" text="Save" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+                        <Button layoutX="20.0" layoutY="43.0" mnemonicParsing="false" onAction="#onCancelButtonClicked" text="Cancel" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0" />
                   <ScrollPane layoutX="33.0" layoutY="75.0" prefHeight="516.6666666666666" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="65.0">
                      <content>
                         <AnchorPane minWidth="175.0">
                            <children>
                               <Label fx:id="lbl_employee_number" layoutX="10.0" layoutY="55.0" minWidth="25.0" prefWidth="130.0" text="Employee #" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
-                              <TextField fx:id="tf_employee_number" disable="true" layoutX="50.0" layoutY="72.0" minWidth="25.0" prefWidth="130.0" text="N/A" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="72.0" />
+                              <TextField fx:id="tf_employee_number" editable="true" layoutX="50.0" layoutY="72.0" minWidth="25.0" prefWidth="130.0" text="N/A" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="72.0" />
                               <Label fx:id="lbl_fName" layoutX="52.0" layoutY="102.0" minWidth="25.0" prefWidth="130.0" text="First Name" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
                               <TextField fx:id="tf_fName" layoutX="50.0" layoutY="121.0" minWidth="25.0" prefHeight="25.0" prefWidth="130.0" text="N/A" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="20.0" />
                               <Label fx:id="lbl_lName" layoutX="50.0" layoutY="149.0" minWidth="25.0" prefWidth="130.0" text="Last Name" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />

@@ -1,7 +1,9 @@
 package com.jomariabejo.controller;
 
+import com.jomariabejo.SceneController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -10,6 +12,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+
+import java.io.IOException;
 
 public class AttendanceController {
 
@@ -106,54 +110,42 @@ public class AttendanceController {
     @FXML
     private Color x421;
 
-    @FXML
-    void filterTableData(ActionEvent event) {
 
+    public void onEmployeeClicked(ActionEvent event) throws IOException {
+        SceneController.employeeScene(event);
     }
 
-    @FXML
-    void handleCancelClick(ActionEvent event) {
-
+    public void onAttendanceClicked(ActionEvent event) throws IOException {
+        SceneController.attendanceScene(event);
     }
 
-    @FXML
-    void handleCreateNewAttendanceClick(ActionEvent event) {
-
+    public void onLeavesClicked(ActionEvent event) throws IOException {
+        SceneController.leavesScene(event);
     }
 
-    @FXML
-    void handleDeleteAttendanceClick(ActionEvent event) {
-
+    public void onSalaryClicked(ActionEvent event) throws IOException {
+        SceneController.salaryScene(event);
     }
 
-    @FXML
-    void handleSaveClick(ActionEvent event) {
-
+    public void onLogoutClicked(ActionEvent event) throws IOException {
+        SceneController.loginScene(event);
     }
 
-    @FXML
-    void onClckedEmployee(ActionEvent event) {
-
+    public void textField_SearchBar(ActionEvent event) {
     }
 
-    @FXML
-    void onClickedAttendance(ActionEvent event) {
-
+    public void attendanceYear(ActionEvent event) {
     }
 
-    @FXML
-    void onClickedLeaves(ActionEvent event) {
-
+    public void onCreateNewAttendanceButtonClicked(ActionEvent event) {
     }
 
-    @FXML
-    void onClickedSalary(ActionEvent event) {
-
+    public void onDeleteButtonAttendanceClicked(ActionEvent event) {
     }
 
-    @FXML
-    void onLogoutClicked(ActionEvent event) {
-
+    public void onCancelButtonClicked(ActionEvent event) {
     }
 
+    public void onSaveButtonClicked(ActionEvent event) {
+    }
 }

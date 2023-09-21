@@ -114,9 +114,8 @@ public class LeavesController implements Runnable {
     }
 
     @FXML
-    void onClickedLeaves(ActionEvent event) {
-        run();
-        btn_leaves.requestFocus();
+    void onClickedLeaves(ActionEvent event) throws IOException {
+        SceneController.leavesScene(event);
     }
 
     @FXML
@@ -125,8 +124,8 @@ public class LeavesController implements Runnable {
     }
 
     @FXML
-    void onClickedLogout(ActionEvent event) {
-
+    void onClickedLogout(ActionEvent event) throws IOException {
+        SceneController.loginScene(event);
     }
 
     @FXML
@@ -169,4 +168,16 @@ public class LeavesController implements Runnable {
     }
 
 
+    public void onClickedSalary(ActionEvent event) {
+
+    }
+
+    public void onActionEmployeeNUmberTF(ActionEvent event) {
+    }
+
+    public void onClickedSpentCredits(ActionEvent event) {
+    }
+
+    public void cb_onKeyPressed(KeyEvent keyEvent) {
+    }
 }

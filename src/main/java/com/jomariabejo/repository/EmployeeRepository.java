@@ -2,12 +2,13 @@ package com.jomariabejo.repository;
 
 import com.jomariabejo.database.HibernateUtil;
 import com.jomariabejo.model.Employee;
+import javafx.scene.control.Alert;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
 public class EmployeeRepository {
-    public void createEmployee(Employee employee) {
+    public static void createEmployee(Employee employee) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.getCurrentSession();
 
@@ -37,9 +38,12 @@ public class EmployeeRepository {
             query.setParameter("grossSemiMonthlyRate", employee.getGrossSemiMonthlyRate());
             query.setParameter("hourlyRate", employee.getHourlyRate());
 
+
             int rowCount = query.executeUpdate();
             session.getTransaction().commit();
             System.out.println("Rows affected: " + rowCount);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "New employee : " + employee.getFirstName() + " " + employee.getLastName() + " added successfully");
+            alert.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
             session.getTransaction().rollback();

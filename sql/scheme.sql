@@ -3,7 +3,7 @@ DATABASE motorph;
 
 CREATE TABLE Employee
 (
-    employeeNumber       INT PRIMARY KEY,
+    employeeNumber       INT AUTO_INCREMENT PRIMARY KEY,
     lastName             VARCHAR(255),
     firstName            VARCHAR(255),
     birthday             DATE,

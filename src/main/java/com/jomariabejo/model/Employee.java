@@ -1,9 +1,7 @@
 package com.jomariabejo.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import org.hibernate.annotations.IdGeneratorType;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -13,6 +11,7 @@ import java.util.Date;
 public class Employee {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "employeeNumber")
     private int employeeNumber;
 
@@ -73,8 +72,7 @@ public class Employee {
     // Constructors, getters, and setters
     // ...
 
-    public Employee(int employeeNumber, String lastName, String firstName, Date birthday, String address, String phoneNumber, String sssNumber, String philhealthNumber, String tinNumber, String pagIbigNumber, String status, String position, String immediateSupervisor, BigDecimal basicSalary, BigDecimal riceSubsidy, BigDecimal phoneAllowance, BigDecimal clothingAllowance, BigDecimal grossSemiMonthlyRate, BigDecimal hourlyRate) {
-        this.employeeNumber = employeeNumber;
+    public Employee(String lastName, String firstName, Date birthday, String address, String phoneNumber, String sssNumber, String philhealthNumber, String tinNumber, String pagIbigNumber, String status, String position, String immediateSupervisor, BigDecimal basicSalary, BigDecimal riceSubsidy, BigDecimal phoneAllowance, BigDecimal clothingAllowance, BigDecimal grossSemiMonthlyRate, BigDecimal hourlyRate) {
         this.lastName = lastName;
         this.firstName = firstName;
         this.birthday = birthday;

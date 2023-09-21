@@ -2,10 +2,6 @@ package com.jomariabejo;
 
 import java.io.IOException;
 
-import com.jomariabejo.controller.AttendanceController;
-import com.jomariabejo.controller.LeavesController;
-import com.jomariabejo.controller.LoginController;
-import com.jomariabejo.controller.SalaryController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -17,25 +13,11 @@ public class SceneController {
     private static Stage stage;
     private static Scene scene;
 
-    /**
-     * FXMLLoader loader = new FXMLLoader(SceneController.class.getResource("signin.fxml"));
-     * Parent root = loader.load();
-     * Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-     * Scene scene = new Scene(root);
-     * stage.setScene(scene);
-     * stage.setTitle("Sign In");
-     * stage.show();
-     *
-     * @param event
-     * @throws IOException
-     */
     public static void loginScene(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(LoginController.class.getResource("login-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(SceneController.class.getResource("login-view.fxml"));
         Parent root = loader.load();
-
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
-
         stage.setScene(scene);
         stage.setTitle("Login View");
         stage.show();
