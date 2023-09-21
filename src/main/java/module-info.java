@@ -11,7 +11,7 @@ module com.jomariabejo {
     exports com.jomariabejo;
     exports com.jomariabejo.model;
     opens com.jomariabejo.model to javafx.fxml, org.hibernate.orm.core;
-    exports com.jomariabejo.controller;
     opens com.jomariabejo.controller to javafx.fxml;
+    exports com.jomariabejo.controller;
     opens com.jomariabejo.utils to javafx.fxml;
 }

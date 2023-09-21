@@ -17,6 +17,18 @@ public class SceneController {
     private static Stage stage;
     private static Scene scene;
 
+    /**
+     * FXMLLoader loader = new FXMLLoader(SceneController.class.getResource("signin.fxml"));
+     * Parent root = loader.load();
+     * Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+     * Scene scene = new Scene(root);
+     * stage.setScene(scene);
+     * stage.setTitle("Sign In");
+     * stage.show();
+     *
+     * @param event
+     * @throws IOException
+     */
     public static void loginScene(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(LoginController.class.getResource("login-view.fxml"));
         Parent root = loader.load();
@@ -30,18 +42,17 @@ public class SceneController {
     }
 
     public static void employeeScene(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(
-                LeavesController.class.getResource("employee-view.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
+        FXMLLoader loader = new FXMLLoader(SceneController.class.getResource("employee-view.fxml"));
+        Parent root = loader.load();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setTitle("Employee View");
+        stage.setTitle("Employees");
         stage.show();
     }
 
     public static void attendanceScene(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(
-                AttendanceController.class.getResource("attendance-view.fxml"));
+        Parent root =  FXMLLoader.load(SceneController.class.getResource("attendance-view.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
@@ -50,17 +61,16 @@ public class SceneController {
     }
 
     public static void leavesScene(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(
-                AttendanceController.class.getResource("leaves-view.fxml"));
+        Parent root = FXMLLoader.load(SceneController.class.getResource("leaves-view.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.setTitle("Leaves View");
         stage.show();
     }
+
     public static void salaryScene(ActionEvent event) throws IOException {
-        Parent root =
-                FXMLLoader.load(SalaryController.class.getResource("salary-view.fxml"));
+        Parent root = FXMLLoader.load(SceneController.class.getResource("salary-view.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

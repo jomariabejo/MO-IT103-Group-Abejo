@@ -164,9 +164,7 @@
             <Region prefHeight="100.0" />
             <Label />
             <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../img/employee.png" />
-               </image>
+
             </ImageView>
             <Label fx:id="lbl_employeeSize" alignment="TOP_RIGHT" contentDisplay="RIGHT" text="0" textAlignment="CENTER">
                <font>
@@ -240,6 +238,7 @@
                     </TableView>
                 <AnchorPane maxWidth="200.0" minWidth="200.0">
                     <children>
+
                         <Button fx:id="btn_saveOrUpdate" disable="true" layoutX="10.0" layoutY="33.0" mnemonicParsing="false" onAction="#onSaveEmployeeClicked" text="Save" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
                         <Button fx:id="btn_cancel" disable="true" layoutX="20.0" layoutY="43.0" mnemonicParsing="false" onAction="#resetDetailsTextField" text="Cancel" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0" />
                   <ScrollPane layoutX="33.0" layoutY="75.0" prefHeight="516.6666666666666" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="65.0">
