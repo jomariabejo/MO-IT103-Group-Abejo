@@ -278,25 +278,25 @@ public class EmployeeController implements Runnable {
     }
 
     public void setCellValueFactoryTableColumns() {
-        id.setCellValueFactory(new PropertyValueFactory<>("id"));
-        l_name.setCellValueFactory(new PropertyValueFactory<>("l_name"));
-        f_name.setCellValueFactory(new PropertyValueFactory<>("f_name"));
+        id.setCellValueFactory(new PropertyValueFactory<>("employeeNumber"));
+        l_name.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        f_name.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         birthday.setCellValueFactory(new PropertyValueFactory<>("birthday"));
         address.setCellValueFactory(new PropertyValueFactory<>("address"));
-        phone_num.setCellValueFactory(new PropertyValueFactory<>("phone_num"));
-        sss_num.setCellValueFactory(new PropertyValueFactory<>("sss_num"));
-        philhealth_num.setCellValueFactory(new PropertyValueFactory<>("philhealth_num"));
-        tin_num.setCellValueFactory(new PropertyValueFactory<>("tin_num"));
-        pagibig_num.setCellValueFactory(new PropertyValueFactory<>("pagibig_num"));
+        phone_num.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+        sss_num.setCellValueFactory(new PropertyValueFactory<>("sssNumber"));
+        philhealth_num.setCellValueFactory(new PropertyValueFactory<>("philhealthNumber"));
+        tin_num.setCellValueFactory(new PropertyValueFactory<>("tinNumber"));
+        pagibig_num.setCellValueFactory(new PropertyValueFactory<>("pagIbigNumber"));
         status.setCellValueFactory(new PropertyValueFactory<>("status"));
         position.setCellValueFactory(new PropertyValueFactory<>("position"));
-        immediate_supervisor.setCellValueFactory(new PropertyValueFactory<>("immediate_supervisor"));
-        basic_salary.setCellValueFactory(new PropertyValueFactory<>("basic_salary"));
-        rice_subsidy.setCellValueFactory(new PropertyValueFactory<>("rice_subsidy"));
-        phone_allowance.setCellValueFactory(new PropertyValueFactory<>("phone_allowance"));
-        clothing_allowance.setCellValueFactory(new PropertyValueFactory<>("clothing_allowance"));
-        gross_semi_monthly_rate.setCellValueFactory(new PropertyValueFactory<>("gross_semi_monthly_rate"));
-        hourly_rate.setCellValueFactory(new PropertyValueFactory<>("hourly_rate"));
+        immediate_supervisor.setCellValueFactory(new PropertyValueFactory<>("immediateSupervisor"));
+        basic_salary.setCellValueFactory(new PropertyValueFactory<>("basicSalary"));
+        rice_subsidy.setCellValueFactory(new PropertyValueFactory<>("riceSubsidy"));
+        phone_allowance.setCellValueFactory(new PropertyValueFactory<>("phoneAllowance"));
+        clothing_allowance.setCellValueFactory(new PropertyValueFactory<>("clothingAllowance"));
+        gross_semi_monthly_rate.setCellValueFactory(new PropertyValueFactory<>("grossSemiMonthlyRate"));
+        hourly_rate.setCellValueFactory(new PropertyValueFactory<>("hourlyRate"));
     }
 
     public void tableViewSelectedItemListener() {

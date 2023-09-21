@@ -34,11 +34,12 @@ public class SceneController {
     }
 
     public static void attendanceScene(ActionEvent event) throws IOException {
-        Parent root =  FXMLLoader.load(SceneController.class.getResource("attendance-view.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
+        FXMLLoader loader = new FXMLLoader(SceneController.class.getResource("attendance-view.fxml"));
+        Parent root = loader.load();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setTitle("Attendance View");
+        stage.setTitle("Attendance");
         stage.show();
     }
 

@@ -154,7 +154,7 @@ public class EmployeeRepository {
 
     public static List<Employee> getAllEmployee() {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        Session session = sessionFactory.getCurrentSession();
+        Session session = sessionFactory.openSession();
         List<Employee> employees = new ArrayList<>();
         try {
             String hql = "SELECT c FROM Employee c";

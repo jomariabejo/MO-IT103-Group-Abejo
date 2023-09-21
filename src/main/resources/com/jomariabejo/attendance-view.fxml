@@ -83,9 +83,9 @@
                 </VBox>
                 <Region prefHeight="100.0" />
             <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image />
-               </image>
+<!--               <image>-->
+<!--                  <Image />-->
+<!--               </image>-->
             </ImageView>
             <Label fx:id="lbl_attendance_size" alignment="TOP_RIGHT" contentDisplay="RIGHT" text="0" textAlignment="CENTER">
                <font>
