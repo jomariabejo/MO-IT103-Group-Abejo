@@ -166,7 +166,7 @@ public class EmployeeController implements Runnable {
      */
 
 
-    public void Initialize() {
+    public void initialize() {
         setCellValueFactoryTableColumns();
         run();
     }

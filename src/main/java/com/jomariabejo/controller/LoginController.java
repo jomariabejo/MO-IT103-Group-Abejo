@@ -56,7 +56,8 @@ public class LoginController {
                     // User not found
                 }
                 session.getTransaction().commit();
-
+                session.close();
+                sessionFactory.close();
             }
             catch (Exception e) {
                 session.getTransaction().rollback();
