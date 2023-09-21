@@ -11,6 +11,7 @@ import com.jomariabejo.model.Employee;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class EmployeeController implements Runnable {
     /**
@@ -207,24 +208,11 @@ public class EmployeeController implements Runnable {
     }
 
     public void onAddNewEmployeeClicked(ActionEvent event) {
+
     }
 
     public void onSaveButtonClicked(ActionEvent event) {
         EmployeeRepository.createEmployee(
-                // should have employee number value to
-                /**
-                 * Error accessing field [private int com.jomariabejo.model.Employee.employeeNumber] by reflection for persistent property [com.jomariabejo.model.Employee#employeeNumber] : null
-                 * 	at org.hibernate.orm.core@6.1.7.Final/org.hibernate.property.access.spi.GetterFieldImpl.get(GetterFieldImpl.java:48)
-                 * 	at org.hibernate.orm.core@6.1.7.Final/org.hibernate.metamodel.mapping.internal.BasicEntityIdentifierMappingImpl.getIdentifier(BasicEntityIdentifierMappingImpl.java:148)
-                 * 	at org.hibernate.orm.core@6.1.7.Final/org.hibernate.persister.entity.AbstractEntityPersister.getIdentifier(AbstractEntityPersister.java:5269)
-                 * 	at org.hibernate.orm.core@6.1.7.Final/org.hibernate.id.Assigned.generate(Assigned.java:31)
-                 * 	at org.hibernate.orm.core@6.1.7.Final/org.hibernate.query.sqm.sql.BaseSqmToSqlAstConverter$IdGeneratorParameter.bindParameterValue(BaseSqmToSqlAstConverter.java:1455)
-                 * 	at org.hibernate.orm.core@6.1.7.Final/org.hibernate.sql.exec.internal.StandardJdbcMutationExecutor.execute(StandardJdbcMutationExecutor.java:74)
-                 * 	at org.hibernate.orm.core@6.1.7.Final/org.hibernate.query.sqm.internal.SimpleInsertQueryPlan.executeUpdate(SimpleInsertQueryPlan.java:124)
-                 * 	at org.hibernate.orm.core@6.1.7.Final/org.hibernate.query.sqm.internal.QuerySqmImpl.doExecuteUpdate(QuerySqmImpl.java:728)
-                 * 	at org.hibernate.orm.core@6.1.7.Final/org.hibernate.query.sqm.internal.QuerySqmImpl.executeUpdate(QuerySqmImpl.java:698)
-                 * 	... 60 more
-                 */
                 new Employee(
                         tf_lName.getText(),
                         tf_fName.getText(),
@@ -244,7 +232,6 @@ public class EmployeeController implements Runnable {
                         new BigDecimal(tf_clothingAllowance.getText()),
                         new BigDecimal(tf_grossSemiMonthlyRate.getText()),
                         new BigDecimal(tf_hourlyRate.getText())));
-//        System.out.println(new BigDecimal(tf_basicSalary.getText()));
     }
 
     public void onCancelButtonClicked(ActionEvent event) {
@@ -274,6 +261,29 @@ public class EmployeeController implements Runnable {
     }
 
     public void textField_SearchBar(ActionEvent event) {
+
+    }
+
+    public void setCellValueFactoryTableColumns() {
+        id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        l_name.setCellValueFactory(new PropertyValueFactory<>("l_name"));
+        f_name.setCellValueFactory(new PropertyValueFactory<>("f_name"));
+        birthday.setCellValueFactory(new PropertyValueFactory<>("birthday"));
+        address.setCellValueFactory(new PropertyValueFactory<>("address"));
+        phone_num.setCellValueFactory(new PropertyValueFactory<>("phone_num"));
+        sss_num.setCellValueFactory(new PropertyValueFactory<>("sss_num"));
+        philhealth_num.setCellValueFactory(new PropertyValueFactory<>("philhealth_num"));
+        tin_num.setCellValueFactory(new PropertyValueFactory<>("tin_num"));
+        pagibig_num.setCellValueFactory(new PropertyValueFactory<>("pagibig_num"));
+        status.setCellValueFactory(new PropertyValueFactory<>("status"));
+        position.setCellValueFactory(new PropertyValueFactory<>("position"));
+        immediate_supervisor.setCellValueFactory(new PropertyValueFactory<>("immediate_supervisor"));
+        basic_salary.setCellValueFactory(new PropertyValueFactory<>("basic_salary"));
+        rice_subsidy.setCellValueFactory(new PropertyValueFactory<>("rice_subsidy"));
+        phone_allowance.setCellValueFactory(new PropertyValueFactory<>("phone_allowance"));
+        clothing_allowance.setCellValueFactory(new PropertyValueFactory<>("clothing_allowance"));
+        gross_semi_monthly_rate.setCellValueFactory(new PropertyValueFactory<>("gross_semi_monthly_rate"));
+        hourly_rate.setCellValueFactory(new PropertyValueFactory<>("hourly_rate"));
     }
 
 }
