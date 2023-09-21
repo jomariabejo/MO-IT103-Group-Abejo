@@ -2,7 +2,9 @@ package com.jomariabejo.controller;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import com.jomariabejo.repository.EmployeeRepository;
@@ -284,6 +286,41 @@ public class EmployeeController implements Runnable {
         clothing_allowance.setCellValueFactory(new PropertyValueFactory<>("clothing_allowance"));
         gross_semi_monthly_rate.setCellValueFactory(new PropertyValueFactory<>("gross_semi_monthly_rate"));
         hourly_rate.setCellValueFactory(new PropertyValueFactory<>("hourly_rate"));
+    }
+
+    public void tableViewSelectedItemListener() {
+        employeeTable.getSelectionModel().selectedItemProperty().addListener(
+                (obs, oldSelection, employee) -> {
+                    if (employee != null) {
+                        // print employee data via console.
+
+                        /**
+                         * Update the Details textfields
+                         */
+
+                        tf_employee_number.setText(String.valueOf(employee.getEmployeeNumber()));
+                        tf_address.setText(employee.getAddress());
+                        tf_basicSalary.setText(String.valueOf(employee.getBasicSalary()));
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy");
+                        LocalDate birthday = LocalDate.parse(employee.getBirthday().toString(), formatter);
+                        dp_birthday.setValue(birthday);
+                        tf_fName.setText(employee.getFirstName());
+                        tf_lName.setText(employee.getLastName());
+                        tf_clothingAllowance.setText(String.valueOf(employee.getClothingAllowance()));
+                        tf_grossSemiMonthlyRate.setText(String.valueOf(employee.getGrossSemiMonthlyRate()));
+                        tf_tin.setText(String.valueOf(employee.getTinNumber()));
+                        tf_status.setText(employee.getStatus());
+                        tf_sss.setText(employee.getSssNumber());
+                        tf_riceSubsidy.setText(String.valueOf(employee.getRiceSubsidy()));
+                        tf_position.setText(employee.getPosition());
+                        tf_phoneAllowance.setText(String.valueOf(employee.getPhoneAllowance()));
+                        tf_philhealth.setText(String.valueOf(employee.getPhilhealthNumber()));
+                        tf_pagibig.setText(String.valueOf(employee.getPagIbigNumber()));
+                        tf_immediateSupervisor.setText(employee.getImmediateSupervisor());
+                        tf_hourlyRate.setText(String.valueOf(employee.getHourlyRate()));
+                        tf_phone_number.setText(String.valueOf(employee.getPhoneNumber()));
+                    }
+                });
     }
 
 }
