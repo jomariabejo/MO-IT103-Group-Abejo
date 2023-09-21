@@ -153,21 +153,9 @@ public class EmployeeRepository {
     }
 
     public static List<Employee> getAllEmployee() {
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        Session session = sessionFactory.getCurrentSession();
-        List<Employee> list = new ArrayList<>();
-
-        try {
-            session.beginTransaction();
-
-            String hql = "SELECT c FROM Employee c";
-
-            list = session.createQuery(hql, Employee.class).getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            return list;
-        }
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        return session.createQuery("SELECT c FROM Employee c", Employee.class).getResultList();
     }
 
 
