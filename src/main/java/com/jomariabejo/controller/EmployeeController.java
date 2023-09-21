@@ -166,6 +166,11 @@ public class EmployeeController implements Runnable {
      */
 
 
+    public void Initialize() {
+        setCellValueFactoryTableColumns();
+        run();
+    }
+
     @Override
     public void run() {
         ObservableList<Employee> list = FXCollections.observableArrayList(EmployeeRepository.getAllEmployee());
