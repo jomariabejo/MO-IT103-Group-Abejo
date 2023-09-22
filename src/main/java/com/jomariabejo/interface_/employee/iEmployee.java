@@ -1,30 +1,36 @@
-package com.jomariabejo.in;
+package com.jomariabejo.interface_.employee;
 
 import com.jomariabejo.model.Employee;
 
 public interface iEmployee {
-    default Employee setNewValues(Employee data) {
-        Employee employee = new Employee();
 
-        employee.setLastName(data.getLastName());
-        employee.setFirstName(data.getFirstName());
-        employee.setBirthday(data.getBirthday());
-        employee.setAddress(data.getAddress());
-        employee.setPhoneNumber(data.getPhoneNumber());
-        employee.setSssNumber(data.getSssNumber());
-        employee.setPhilhealthNumber(data.getPhilhealthNumber());
-        employee.setTinNumber(data.getTinNumber());
-        employee.setPagIbigNumber(data.getPagIbigNumber());
-        employee.setStatus(data.getStatus());
-        employee.setPosition(data.getPosition());
-        employee.setImmediateSupervisor(data.getImmediateSupervisor());
-        employee.setBasicSalary(data.getBasicSalary());
-        employee.setRiceSubsidy(data.getRiceSubsidy());
-        employee.setPhoneAllowance(data.getPhoneAllowance());
-        employee.setClothingAllowance(data.getClothingAllowance());
-        employee.setGrossSemiMonthlyRate(data.getGrossSemiMonthlyRate());
-        employee.setHourlyRate(data.getHourlyRate());
+    /**
+     * This method will update the primary employee based on the values of secondary employee
+     * @param primaryEmployee The main Employee
+     * @param SecondaryEmployee The updated Values of Employee
+     * @return
+     */
+    default Employee injectNewValues(Employee primaryEmployee, Employee SecondaryEmployee) {
 
-        return employee;
+        primaryEmployee.setLastName(SecondaryEmployee.getLastName());
+        primaryEmployee.setFirstName(SecondaryEmployee.getFirstName());
+        primaryEmployee.setBirthday(SecondaryEmployee.getBirthday());
+        primaryEmployee.setAddress(SecondaryEmployee.getAddress());
+        primaryEmployee.setPhoneNumber(SecondaryEmployee.getPhoneNumber());
+        primaryEmployee.setSssNumber(SecondaryEmployee.getSssNumber());
+        primaryEmployee.setPhilhealthNumber(SecondaryEmployee.getPhilhealthNumber());
+        primaryEmployee.setTinNumber(SecondaryEmployee.getTinNumber());
+        primaryEmployee.setPagIbigNumber(SecondaryEmployee.getPagIbigNumber());
+        primaryEmployee.setStatus(SecondaryEmployee.getStatus());
+        primaryEmployee.setPosition(SecondaryEmployee.getPosition());
+        primaryEmployee.setImmediateSupervisor(SecondaryEmployee.getImmediateSupervisor());
+        primaryEmployee.setBasicSalary(SecondaryEmployee.getBasicSalary());
+        primaryEmployee.setRiceSubsidy(SecondaryEmployee.getRiceSubsidy());
+        primaryEmployee.setPhoneAllowance(SecondaryEmployee.getPhoneAllowance());
+        primaryEmployee.setClothingAllowance(SecondaryEmployee.getClothingAllowance());
+        primaryEmployee.setGrossSemiMonthlyRate(SecondaryEmployee.getGrossSemiMonthlyRate());
+        primaryEmployee.setHourlyRate(SecondaryEmployee.getHourlyRate());
+
+        return primaryEmployee;
     }
 }

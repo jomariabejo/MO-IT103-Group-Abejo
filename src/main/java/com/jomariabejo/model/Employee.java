@@ -1,14 +1,19 @@
 package com.jomariabejo.model;
 
-import jakarta.persistence.*;
-import org.hibernate.annotations.IdGeneratorType;
+import com.jomariabejo.interface_.employee.iEmployee;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
 @Table(name = "Employee")
-public class Employee {
+public class Employee implements iEmployee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -68,9 +73,6 @@ public class Employee {
 
     @Column(name = "hourlyRate")
     private BigDecimal hourlyRate;
-
-    // Constructors, getters, and setters
-    // ...
 
     public Employee(String lastName, String firstName, Date birthday, String address, String phoneNumber, String sssNumber, String philhealthNumber, String tinNumber, String pagIbigNumber, String status, String position, String immediateSupervisor, BigDecimal basicSalary, BigDecimal riceSubsidy, BigDecimal phoneAllowance, BigDecimal clothingAllowance, BigDecimal grossSemiMonthlyRate, BigDecimal hourlyRate) {
         this.lastName = lastName;

@@ -175,7 +175,7 @@ public class EmployeeController implements Runnable {
     public void run() {
         ObservableList<Employee> list = FXCollections.observableArrayList(EmployeeRepository.getAllEmployee());
         employeeTable.setItems(list);
-        lbl_employeeSize.setText(EmployeeRepository.getEmployeeSize());
+        lbl_employeeSize.setText(String.valueOf(EmployeeRepository.getEmployeeSize()));
 
         tableViewSelectedItemListener();
     }

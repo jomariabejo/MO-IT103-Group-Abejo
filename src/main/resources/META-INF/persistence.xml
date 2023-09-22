@@ -1,29 +1,27 @@
-<!--<?xml version="1.0" encoding="UTF-8"?>-->
-<!--<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"-->
-<!--             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
-<!--             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"-->
-<!--             version="2.2">-->
-<!--    <persistence-unit name="default" transaction-type="RESOURCE_LOCAL">-->
-<!--        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>-->
-<!--        <class>com.jomariabejo.model.Attendance</class>-->
-<!--        <class>com.jomariabejo.model.User</class>-->
-<!--        <class>com.jomariabejo.model.Employee</class>-->
-<!--        <class>com.jomariabejo.model.Attendance</class>-->
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
+             version="2.2">
+    <persistence-unit name="default" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>com.jomariabejo.model.Employee</class>
 
-<!--        &lt;!&ndash; database connection settings &ndash;&gt;-->
-<!--        <properties>-->
-<!--            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />-->
-<!--            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/motorph" />-->
-<!--            <property name="javax.persistence.jdbc.user" value="root" />-->
-<!--            <property name="javax.persistence.jdbc.password" value="@L03e1t3" />-->
+        <!-- database connection settings -->
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/motorph" />
+            <property name="javax.persistence.jdbc.user" value="root" />
+            <property name="javax.persistence.jdbc.password" value="@L03e1t3" />
 
-<!--            &lt;!&ndash; Hibernate dialect for MySQL &ndash;&gt;-->
-<!--            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />-->
-<!--            &lt;!&ndash; Auto-create tables from annotated entity classes  &ndash;&gt;-->
-<!--            <property name="hibernate.hbm2ddl.auto" value="update" />-->
+            <!-- Hibernate dialect for MySQL -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 
-<!--            &lt;!&ndash; Show SQL statements in console  &ndash;&gt;-->
-<!--            <property name="hibernate.show_sql" value="true" />-->
-<!--        </properties>-->
-<!--    </persistence-unit>-->
-<!--</persistence>-->
+            <!-- Auto-create tables from annotated entity classes  -->
+            <property name="hibernate.hbm2ddl.auto" value="update" />
+
+            <!-- Show SQL statements in console  -->
+            <property name="hibernate.show_sql" value="true" />
+        </properties>
+    </persistence-unit>
+</persistence>

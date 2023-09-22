@@ -23,7 +23,7 @@ public class MainApp extends Application {
     }
 
     public static void main(String[] args) {
-        launch(args);
-//        System.out.println(EmployeeRepository.getAllEmployee().size());
+//        launch(args);
+        System.out.println(EmployeeRepository.getEmployee(1).getLastName());
     }
 }
