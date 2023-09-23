@@ -2,6 +2,8 @@ package user;
 
 import com.jomariabejo.database.db;
 import com.jomariabejo.model.User;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -21,25 +23,23 @@ public class CreateUserTest {
         user.setAddress("123 Main St");
         user.setPhoneNumber("123-456-7890");
 
-        // Get a Hibernate session
-        SessionFactory sessionFactory = db.getSessionFactory();
-        Session session = sessionFactory.getCurrentSession();
-
+        EntityManager entityManager = db.getInstance().getEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
         try {
+            entityTransaction.begin();
             // Begin a transaction
-            session.beginTransaction();
 
             // Save the user to the database
-            session.save(user);
+            entityManager.persist(user);
 
             // Commit the transaction
-            session.getTransaction().commit();
+            entityTransaction.commit();
 
             System.out.println("User saved to the database with ID: " + user.getUserId());
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            sessionFactory.close();
+            entityManager.close();
         }
     }
 }

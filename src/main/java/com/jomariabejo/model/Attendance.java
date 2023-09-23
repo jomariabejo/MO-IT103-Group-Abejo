@@ -44,8 +44,7 @@ public class Attendance {
     public Attendance() {
     }
 
-    public Attendance(int id, int employeeNumber, String lastName, String firstName, Date date, Time timeIn, Time timeOut) {
-        this.id = id;
+    public Attendance(int employeeNumber, String lastName, String firstName, Date date, Time timeIn, Time timeOut) {
         this.employeeNumber = employeeNumber;
         this.lastName = lastName;
         this.firstName = firstName;
