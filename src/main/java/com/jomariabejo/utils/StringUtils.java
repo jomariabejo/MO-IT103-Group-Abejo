@@ -4,7 +4,7 @@ import java.text.DecimalFormat;
 
 public class StringUtils {
 
-    public static String addDoubleQuotesIfStringHasComma(String str) {
+    public static String addDoubleQuotes(String str) {
         return str.contains(",") ? "\""+str+"\"" : str;
     }
 

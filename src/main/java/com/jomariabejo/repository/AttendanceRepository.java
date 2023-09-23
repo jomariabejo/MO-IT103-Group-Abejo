@@ -1,14 +1,14 @@
 package com.jomariabejo.repository;
 
 import com.jomariabejo.database.db;
-import com.jomariabejo.interface_.employee.iEmployeeAttendanceRecord;
+import com.jomariabejo.interface_.employee.iAttendanceRecord;
 import com.jomariabejo.model.Employee;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
 import java.util.List;
 
-public class AttendanceRepository implements iEmployeeAttendanceRecord {
+public class AttendanceRepository implements iAttendanceRecord {
     public static void createAttendance() {
 
     }
