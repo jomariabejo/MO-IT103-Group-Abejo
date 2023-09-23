@@ -91,7 +91,7 @@
                               <Insets right="10.0" />
                            </HBox.margin>
                               </Button>
-                              <Button fx:id="btn_attendance" mnemonicParsing="false" onAction="#onAttendanceClicked" text="Attendance">
+                              <Button fx:id="btn_attendance" mnemonicParsing="false" onAction="#onAttendanceClicked" text="attendance">
                                   <font>
                                       <Font size="15.0" />
                                   </font>

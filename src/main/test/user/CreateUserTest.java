@@ -1,6 +1,6 @@
 package user;
 
-import com.jomariabejo.database.HibernateUtil;
+import com.jomariabejo.database.db;
 import com.jomariabejo.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -22,7 +22,7 @@ public class CreateUserTest {
         user.setPhoneNumber("123-456-7890");
 
         // Get a Hibernate session
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        SessionFactory sessionFactory = db.getSessionFactory();
         Session session = sessionFactory.getCurrentSession();
 
         try {

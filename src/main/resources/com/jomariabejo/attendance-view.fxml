@@ -47,7 +47,7 @@
                                         <Insets right="10.0" />
                                     </HBox.margin>
                                 </Button>
-                                <Button fx:id="btn_attendance" mnemonicParsing="false" onAction="#onAttendanceClicked" text="Attendance">
+                                <Button fx:id="btn_attendance" mnemonicParsing="false" onAction="#onAttendanceClicked" text="attendance">
                                     <font>
                                         <Font size="15.0" />
                                     </font>
@@ -129,7 +129,7 @@
                                                 <Insets bottom="10.0" left="40.0" top="10.0" />
                                             </VBox.margin>
                                         </Label>
-                                        <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onCreateNewAttendanceButtonClicked" prefHeight="32.0" prefWidth="443.0" text="Create New Attendance">
+                                        <Button alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onCreateNewAttendanceButtonClicked" prefHeight="32.0" prefWidth="443.0" text="Create New attendance">
                                             <font>
                                                 <Font size="15.0" />
                                             </font>
@@ -137,7 +137,7 @@
                                                 <Insets left="75.0" right="50.0" top="5.0" />
                                             </VBox.margin>
                                         </Button>
-                                        <Button fx:id="btn_delete" alignment="TOP_LEFT" disable="true" mnemonicParsing="false" onAction="#onDeleteButtonAttendanceClicked" prefHeight="32.0" prefWidth="444.0" text="Delete Attendance">
+                                        <Button fx:id="btn_delete" alignment="TOP_LEFT" disable="true" mnemonicParsing="false" onAction="#onDeleteButtonAttendanceClicked" prefHeight="32.0" prefWidth="444.0" text="Delete attendance">
                                             <font>
                                                 <Font size="15.0" />
                                             </font>

@@ -1,8 +1,10 @@
 package com.jomariabejo.controller;
 
 import com.jomariabejo.SceneController;
-import com.jomariabejo.database.HibernateUtil;
+import com.jomariabejo.database.db;
 import com.jomariabejo.model.User;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -27,21 +29,21 @@ public class LoginController {
         if (verifyUser(txtField_employeeNumber.getText(), pwField_password.getText())) {
 
 
-            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-            Session session = sessionFactory.getCurrentSession();
+            EntityManager entityManager = db.getInstance().getEntityManager();
+            EntityTransaction entityTransaction = entityManager.getTransaction();
 
             try {
-                session.beginTransaction();
+                entityTransaction.begin();
 
                 String username = txtField_employeeNumber.getText();
                 String password = pwField_password.getText();
 
                 String hql = "FROM User u WHERE u.username = :username AND u.password = :password";
 
-                User user = (User) session.createQuery(hql)
+                User user = (User) entityManager.createQuery(hql)
                         .setParameter("username", username)
                         .setParameter("password", password)
-                        .uniqueResult();
+                        .getSingleResult();
 
                 if (user != null) {
                     // User with the provided username and password exists
@@ -57,7 +59,6 @@ public class LoginController {
                 }
             }
             catch (Exception e) {
-                session.getTransaction().rollback();
                 e.printStackTrace();
             }
         }

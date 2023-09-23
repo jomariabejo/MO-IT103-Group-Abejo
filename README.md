@@ -11,7 +11,7 @@ This is a simple employee management application built using JavaFX and utilizin
 - Add new employees to the CSV file.
 - Edit employee information (name, hourly rate, position, etc.).
 - Delete employees from the CSV file.
-### [Attendance](docs/uiPictures/3attendanceview.png)
+### [attendance](docs/uiPictures/3attendanceview.png)
 - View a list of attendances stored in a CSV file
 - Add new attendance to the CSV file
 - Edit attendance(date and time in or timeout)
@@ -43,7 +43,7 @@ This is a simple employee management application built using JavaFX and utilizin
 
 1. Build and run the application.
 2. The application will display login view.
-3. Upon success login, user can view different scenes(Employee, Attendance, Leave and Salary Calculator).
+3. Upon success login, user can view different scenes(Employee, attendance, Leave and Salary Calculator).
 
 ## Employee Scene Usage
 1. To <b>add new employee</b> select button named Add New Employee. Put values for entire fields and hit save.
