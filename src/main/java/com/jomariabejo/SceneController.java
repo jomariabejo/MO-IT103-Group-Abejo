@@ -2,6 +2,7 @@ package com.jomariabejo;
 
 import java.io.IOException;
 
+import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -9,7 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class SceneController {
+public class SceneController extends Application {
     private static Stage stage;
     private static Scene scene;
 
@@ -59,5 +60,19 @@ public class SceneController {
         stage.setScene(scene);
         stage.setTitle("Salary View");
         stage.show();
+    }
+
+    @Override
+    public void start(Stage stage) {
+        try {
+//            Parent root = FXMLLoader.load(MainApp.class.getResource("login-view.fxml"));
+            Parent root = FXMLLoader.load(MainApp.class.getResource("login-view.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Login");
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

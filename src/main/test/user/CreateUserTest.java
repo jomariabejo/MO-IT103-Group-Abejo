@@ -1,3 +1,5 @@
+package user;
+
 import com.jomariabejo.database.HibernateUtil;
 import com.jomariabejo.model.User;
 import org.hibernate.Session;

@@ -77,7 +77,8 @@ public class EmployeeRepository {
         entityTransaction.begin();
 
         return entityManager
-                .createQuery("SELECT c FROM Employee c ", Employee.class).getResultList();
+                .createQuery("SELECT c FROM Employee c ", Employee.class)
+                .getResultList();
     }
 
 

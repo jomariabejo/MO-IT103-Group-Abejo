@@ -23,6 +23,11 @@ public class Attendance {
     @Column(name = "firstName")
     private String firstName;
 
+    @ManyToOne
+    @JoinColumn(name = "employee_id") // Adjust the column name to match your schema
+    private Employee employee;
+
+
     @Column(name = "date")
     private Date date;
 
