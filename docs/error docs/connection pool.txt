@@ -1,0 +1,33 @@
+The error message you're encountering, "The internal connection pool has reached its maximum size and no connection is currently available," indicates that your application has exhausted its database connection pool's capacity, and it can't obtain a new database connection when needed.
+
+In your code, you are opening a new `EntityManager` and beginning a new transaction each time you call a method in `EmployeeRepository`. Although this approach can work, it's not efficient and can lead to connection pool exhaustion when many database operations are being performed in a short time.
+
+To resolve this issue, you should consider using connection pooling more effectively and avoid opening and closing the `EntityManager` and transactions in every method. You should generally follow the practice of opening and closing resources like `EntityManager` and transactions in the shortest scope possible.
+
+Here's an example of how you can refactor your code to use a single `EntityManager` for multiple operations within a single method:
+
+```java
+public class EmployeeRepository {
+    private static final EntityManager entityManager = db.getInstance().getEntityManager();
+
+    public static void createEmployee(Employee employee) {
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        try {
+            entityTransaction.begin();
+            entityManager.persist(employee);
+            entityTransaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (entityTransaction.isActive()) {
+                entityTransaction.rollback();
+            }
+        }
+    }
+
+    // Other methods follow a similar pattern, reusing the entityManager.
+}
+```
+
+By reusing the same `EntityManager` for multiple database operations within a single method, you reduce the overhead of opening and closing connections for each operation. Make sure to handle exceptions and transactions appropriately, as shown in the example above.
+
+Additionally, you may need to configure your connection pool settings (maximum pool size, timeout settings, etc.) to match the concurrency needs of your application to prevent connection pool exhaustion.

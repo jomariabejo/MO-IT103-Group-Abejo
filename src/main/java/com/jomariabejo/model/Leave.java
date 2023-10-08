@@ -1,6 +1,14 @@
 package com.jomariabejo.model;
 
-import jakarta.persistence.*;
+import com.jomariabejo.enums.EmployeeLeaveType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 import java.util.Date;
 
@@ -22,18 +30,14 @@ public class Leave {
     @Column(name = "date")
     private Date date;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "type")
-    private LeaveType type;
+    private EmployeeLeaveType type;
 
     @Column(name = "description")
     private String description;
 
-    // Constructors, getters, and setters
-    // ...
 
-
-    public Leave(int leaveId, String firstName, String lastName, Date date, LeaveType type, String description) {
+    public Leave(int leaveId, String firstName, String lastName, Date date, EmployeeLeaveType type, String description) {
         this.leaveId = leaveId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -78,11 +82,11 @@ public class Leave {
         this.date = date;
     }
 
-    public LeaveType getType() {
+    public EmployeeLeaveType getType() {
         return type;
     }
 
-    public void setType(LeaveType type) {
+    public void setType(EmployeeLeaveType type) {
         this.type = type;
     }
 
@@ -92,11 +96,5 @@ public class Leave {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public enum LeaveType {
-        Vacation,
-        Sick,
-        Emergency
     }
 }

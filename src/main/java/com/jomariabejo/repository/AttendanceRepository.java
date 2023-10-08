@@ -18,7 +18,7 @@ public class AttendanceRepository {
      * @param employeeNumber The unique identifier of the employee.
      * @return A List of Attendance objects associated with the specified employeeNumber.
      */
-    List<Attendance> getAllAttendance(long employeeNumber) {
+    static List<Attendance> getAllAttendance(long employeeNumber) {
         return db.getInstance().getEntityManager()
                 .createQuery("SELECT a FROM Attendance a WHERE a.employee.id = :employeeID", Attendance.class)
                 .setParameter("employeeID", employeeNumber)
@@ -140,5 +140,9 @@ public class AttendanceRepository {
         entityTransaction.begin();
         entityTransaction.commit();
         entityManager.close();
+    }
+
+    public static void main(String[] args) {
+        AttendanceRepository.getAllAttendance(10001).size();
     }
 }

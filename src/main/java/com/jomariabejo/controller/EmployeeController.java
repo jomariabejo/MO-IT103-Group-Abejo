@@ -4,17 +4,25 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
+import com.jomariabejo.formatter.DateFormatter;
 import com.jomariabejo.repository.EmployeeRepository;
 import com.jomariabejo.SceneController;
 import com.jomariabejo.model.Employee;
+import com.jomariabejo.utils.AlertUtils;
+import com.jomariabejo.utils.DateUtils;
+import com.jomariabejo.utils.TextFieldUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class EmployeeController implements Runnable {
@@ -37,7 +45,7 @@ public class EmployeeController implements Runnable {
     private Button btn_cancel;
 
     @FXML
-    private Button btn_deleteSelectedEmployee;
+    private Button btn_delete;
 
     @FXML
     private Button btn_employee;
@@ -205,7 +213,22 @@ public class EmployeeController implements Runnable {
     }
 
     public void onDeleteEmployeeClicked(ActionEvent event) {
+        try {
+            boolean isEmployeeFound = EmployeeRepository.deleteEmployee(Long.valueOf(tf_employee_number.getText()));
 
+            if (isEmployeeFound) {
+                run();
+                AlertUtils.alertSuccess("Employee: "+ tf_fName.getText() + " " + tf_lName.getText() + " deleted successfully...");
+            }
+            else {
+                AlertUtils.alertFailed("Employee: "+ tf_fName.getText() + " " + tf_lName.getText() + " not found...");
+            }
+            // reload scene
+            btn_delete.setDisable(true);
+        }
+        catch (Exception e) {
+            AlertUtils.alertFailed("Employee number "+ tf_employee_number.getText() + " not found.");
+        }
     }
 
     public void onActionViewDetails(ActionEvent event) {
@@ -220,52 +243,94 @@ public class EmployeeController implements Runnable {
 
     }
 
+    /**
+     * This method will clear the textfields and redirect to the primary textfield where
+     *
+     * @param event
+     */
     public void onAddNewEmployeeClicked(ActionEvent event) {
-
+        clearFields();
+        tf_employee_number.requestFocus();
+        btn_saveOrUpdate.setText("Save");
     }
 
     public void onSaveButtonClicked(ActionEvent event) {
-        EmployeeRepository.createEmployee(
-                new Employee(
-                        tf_lName.getText(),
-                        tf_fName.getText(),
-                        Date.from(dp_birthday.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()),
-                        tf_address.getText(),
-                        tf_phone_number.getText(),
-                        tf_sss.getText(),
-                        tf_philhealth.getText(),
-                        tf_tin.getText(),
-                        tf_pagibig.getText(),
-                        tf_status.getText(),
-                        tf_position.getText(),
-                        tf_immediateSupervisor.getText(),
-                        new BigDecimal(tf_basicSalary.getText()),
-                        new BigDecimal(tf_riceSubsidy.getText()),
-                        new BigDecimal(tf_phoneAllowance.getText()),
-                        new BigDecimal(tf_clothingAllowance.getText()),
-                        new BigDecimal(tf_grossSemiMonthlyRate.getText()),
-                        new BigDecimal(tf_hourlyRate.getText())));
+        try {
+            if (btn_saveOrUpdate.getText().equals("Save")) {
+                if (isValidFields()) {
+                    EmployeeRepository.createEmployee(
+                            new Employee(
+                                    tf_lName.getText().trim(),
+                                    tf_fName.getText().trim(),
+                                    Date.from(dp_birthday.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                                    tf_address.getText().trim(),
+                                    tf_phone_number.getText().trim(),
+                                    tf_sss.getText().trim(),
+                                    tf_philhealth.getText(),
+                                    tf_tin.getText().trim(),
+                                    tf_pagibig.getText().trim(),
+                                    tf_status.getText().trim(),
+                                    tf_position.getText().trim(),
+                                    tf_immediateSupervisor.getText().trim(),
+                                    new BigDecimal(tf_basicSalary.getText().trim()),
+                                    new BigDecimal(tf_riceSubsidy.getText().trim()),
+                                    new BigDecimal(tf_phoneAllowance.getText().trim()),
+                                    new BigDecimal(tf_clothingAllowance.getText().trim()),
+                                    new BigDecimal(tf_grossSemiMonthlyRate.getText().trim()),
+                                    new BigDecimal(tf_hourlyRate.getText().trim())));
+                    AlertUtils.alertSuccess("Employee " + tf_fName.getText().trim() + " " + tf_lName.getText().trim() + "created successfully.");
+                }
+            }
+            else {
+                /**
+                 * String lastName, String firstName, Date birthday, String address, String phoneNumber,
+                 * String sssNumber, String philhealthNumber, String tinNumber, String pagIbigNumber, String status,
+                 * String position, String immediateSupervisor, BigDecimal basicSalary, BigDecimal riceSubsidy,
+                 * BigDecimal phoneAllowance, BigDecimal clothingAllowance, BigDecimal grossSemiMonthlyRate,
+                 * BigDecimal hourlyRate
+                 */
+                /**
+                 * basicSalary
+                 * riceSubsidy
+                 * phoneAllowance
+                 * clothingAllowance
+                 * grossSemiMonthlyRate
+                 * hourlyRate
+                 */
+
+                BigDecimal basicSalary = new BigDecimal(tf_basicSalary.getText());
+                BigDecimal riceSubsidy = new BigDecimal(tf_riceSubsidy.getText());
+                BigDecimal phoneAllowance = new BigDecimal(tf_phoneAllowance.getText());
+                BigDecimal clothingAllowance = new BigDecimal(tf_clothingAllowance.getText());
+                BigDecimal grossSemiMonthlyRate = new BigDecimal(tf_grossSemiMonthlyRate.getText());
+                BigDecimal hourlyRate = new BigDecimal(tf_hourlyRate.getText());
+
+                EmployeeRepository.updateEmployee(Long.valueOf(tf_employee_number.getText()),
+                        new Employee(tf_lName.getText().trim(),
+                                tf_fName.getText().trim(),
+                                DateFormatter.convertLocalDateToDate(dp_birthday.getValue()),
+                                tf_address.getText().trim(),
+                                tf_phone_number.getText().trim(),
+                                tf_sss.getText().trim(),
+                                tf_philhealth.getText().trim(),
+                                tf_tin.getText().trim(),
+                                tf_pagibig.getText().trim(),
+                                tf_status.getText().trim(),
+                                tf_position.getText().trim(),
+                                tf_immediateSupervisor.getText().trim(),basicSalary,riceSubsidy,phoneAllowance,clothingAllowance,grossSemiMonthlyRate,hourlyRate));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            AlertUtils.alertFailed(e.getMessage());
+        }
+        finally {
+            // Reload Scene
+            run();
+        }
     }
 
     public void onCancelButtonClicked(ActionEvent event) {
-        tf_lName.setText("");
-        tf_fName.setText("");
-        dp_birthday.setValue(null);  // Set the DatePicker to its default value
-        tf_address.setText("");
-        tf_phone_number.setText("");
-        tf_sss.setText("");
-        tf_philhealth.setText("");
-        tf_tin.setText("");
-        tf_pagibig.setText("");
-        tf_status.setText("");
-        tf_position.setText("");
-        tf_immediateSupervisor.setText("");
-        tf_basicSalary.setText("");
-        rice_subsidy.setText("");
-        phone_allowance.setText("");
-        clothing_allowance.setText("");
-        gross_semi_monthly_rate.setText("");
-        hourly_rate.setText("");
+        clearFields();
     }
 
 
@@ -310,11 +375,10 @@ public class EmployeeController implements Runnable {
                          */
 
                         tf_employee_number.setText(String.valueOf(employee.getEmployeeNumber()));
+                        tf_lName.setText(employee.getLastName());
+                        tf_fName.setText(employee.getFirstName());
                         tf_address.setText(employee.getAddress());
-                        tf_basicSalary.setText(String.valueOf(employee.getBasicSalary()));
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy");
-                        LocalDate birthday = LocalDate.parse(employee.getBirthday().toString(), formatter);
-                        dp_birthday.setValue(birthday);
+                        dp_birthday.setValue(DateUtils.convertStringToDate(employee.getBirthday().toString()));
                         tf_fName.setText(employee.getFirstName());
                         tf_lName.setText(employee.getLastName());
                         tf_clothingAllowance.setText(String.valueOf(employee.getClothingAllowance()));
@@ -330,8 +394,80 @@ public class EmployeeController implements Runnable {
                         tf_immediateSupervisor.setText(employee.getImmediateSupervisor());
                         tf_hourlyRate.setText(String.valueOf(employee.getHourlyRate()));
                         tf_phone_number.setText(String.valueOf(employee.getPhoneNumber()));
+                        tf_basicSalary.setText(String.valueOf(employee.getBasicSalary()));
                     }
                 });
+        btn_saveOrUpdate.setText("Update");
+        btn_delete.setDisable(false);
     }
 
+
+    /**
+     * Custom Hard Coded Methods Starts Here😁
+     */
+    private void clearFields() {
+        tf_employee_number.setText("");
+        tf_lName.setText("");
+        tf_fName.setText("");
+        dp_birthday.setValue(LocalDate.of(2001, 11, 28));  // Set the DatePicker to its default value
+        tf_address.setText("");
+        tf_phone_number.setText("");
+        tf_sss.setText("");
+        tf_philhealth.setText("");
+        tf_tin.setText("");
+        tf_pagibig.setText("");
+        tf_status.setText("");
+        tf_position.setText("");
+        tf_immediateSupervisor.setText("");
+        tf_basicSalary.setText("");
+        tf_riceSubsidy.setText("");
+        tf_phone_number.setText("");
+        tf_clothingAllowance.setText("");
+        tf_grossSemiMonthlyRate.setText("");
+        tf_hourlyRate.setText("");
+        btn_saveOrUpdate.setText("Save");
+    }
+
+    /**
+     * Check all the fields values,
+     * If any of textfields are null or blank, an alert error should be displayed and return false.
+     * else continue;
+     */
+    private boolean isValidFields() {
+
+        if (dp_birthday.getValue() == LocalDate.of(2001, 11, 28)) {
+            AlertUtils.alertFailed("Set your birthday");
+            return false;
+        } else {
+
+
+            TextField[] textField = {
+                    tf_employee_number,
+                    tf_lName,
+                    tf_fName,
+                    tf_address,
+                    tf_phone_number,
+                    tf_sss,
+                    tf_philhealth,
+                    tf_tin,
+                    tf_pagibig,
+                    tf_status,
+                    tf_position,
+                    tf_immediateSupervisor,
+                    tf_basicSalary,
+                    tf_riceSubsidy,
+                    tf_clothingAllowance,
+                    tf_grossSemiMonthlyRate,
+                    tf_hourlyRate
+            };
+            for (short i = 0; i < textField.length; i++) {
+                if (textField[i].getText().isEmpty()) {
+                    AlertUtils.alertFailed("Invalid input for " + TextFieldUtils.getEmployeeTextFieldName[i]);
+                    textField[i].requestFocus();
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }

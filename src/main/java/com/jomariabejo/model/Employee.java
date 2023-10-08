@@ -13,7 +13,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "Employee")
-public class Employee implements iEmployee {
+public class Employee implements iEmployee{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

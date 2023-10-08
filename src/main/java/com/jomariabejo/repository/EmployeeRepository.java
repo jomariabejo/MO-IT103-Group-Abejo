@@ -3,94 +3,112 @@ package com.jomariabejo.repository;
 import com.jomariabejo.model.Employee;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
-import javafx.scene.control.Alert;
 import com.jomariabejo.database.db;
 
+import java.util.Collections;
 import java.util.List;
 
 public class EmployeeRepository {
+    private static final EntityManager entityManager = db.getInstance().getEntityManager();
+
     public static void createEmployee(Employee employee) {
-        EntityManager entityManager = db.getInstance().getEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
         try {
-            entityTransaction.begin();
-
+//            entityTransaction.begin();
             entityManager.persist(employee);
             entityTransaction.commit();
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "New employee : " + employee.getFirstName() + " " + employee.getLastName() + " added successfully");
-            alert.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            entityManager.close();
+            if (entityTransaction.isActive()) {
+                entityTransaction.rollback();
+            }
         }
     }
 
-
     public static Employee getEmployee(int id) {
-        EntityManager entityManager = db.getInstance().getEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
-        entityTransaction.begin();
-
-        return entityManager.find(Employee.class, id);
+        try {
+//            entityTransaction.begin();
+            return entityManager.find(Employee.class, id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (entityTransaction.isActive()) {
+                entityTransaction.rollback();
+            }
+            return null;
+        }
     }
 
     public static void updateEmployee(Long id, Employee employeeNewValues) {
-        EntityManager entityManager = db.getInstance().getEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
         Employee employee = entityManager.find(Employee.class, id);
 
         try {
             if (employee != null) {
                 employee.injectNewValues(employee, employeeNewValues);
-                entityManager.getTransaction().begin();
-                entityManager.getTransaction().commit();
+//                entityTransaction.begin();
+                entityTransaction.commit();
                 System.out.println("UPDATE SUCCESS");
             }
         } catch (Exception e) {
             System.out.println("UPDATE FAILED");
             e.printStackTrace();
-        } finally {
-            entityManager.close();
+            if (entityTransaction.isActive()) {
+                entityTransaction.rollback();
+            }
         }
     }
 
-
-    public static void deleteEmployee(Long id) {
-        EntityManager entityManager = db.getInstance().getEntityManager();
+    public static boolean deleteEmployee(Long id) {
         EntityTransaction entityTransaction = entityManager.getTransaction();
-
         Employee employee = entityManager.find(Employee.class, id);
 
-        if (employee != null) {
-            entityTransaction.begin();
-            entityManager.remove(employee);
-            entityTransaction.commit();
+        try {
+            if (employee != null) {
+                entityTransaction.begin();
+                entityManager.remove(employee);
+                entityTransaction.commit();
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (entityTransaction.isActive()) {
+                entityTransaction.rollback();
+            }
         }
-
-        entityManager.close();
+        return false;
     }
 
     public static List<Employee> getAllEmployee() {
-        EntityManager entityManager = db.getInstance().getEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
-
-        entityTransaction.begin();
-
-        return entityManager
-                .createQuery("SELECT c FROM Employee c ", Employee.class)
-                .getResultList();
+        try {
+//            entityTransaction.begin();
+            return entityManager
+                    .createQuery("SELECT c FROM Employee c ", Employee.class)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (entityTransaction.isActive()) {
+                entityTransaction.rollback();
+            }
+            return Collections.emptyList();
+        }
     }
 
-
     public static int getEmployeeSize() {
-        EntityManager entityManager = db.getInstance().getEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
-
-        entityTransaction.begin();
-
-        return entityManager
-                .createQuery("FROM Employee", Employee.class)
-                .getResultList()
-                .size();
+        try {
+//            entityTransaction.begin();
+            return entityManager
+                    .createQuery("FROM Employee", Employee.class)
+                    .getResultList()
+                    .size();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (entityTransaction.isActive()) {
+                entityTransaction.rollback();
+            }
+            return 0;
+        }
     }
 }
