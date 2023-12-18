@@ -4,6 +4,8 @@ module com.example.fx123 {
 
     requires org.controlsfx.controls;
 
-    opens com.example.fx123 to javafx.fxml;
-    exports com.example.fx123;
+    opens com.payrollsystem.jomariabejo to javafx.fxml;
+    exports com.payrollsystem.jomariabejo;
+    exports com.payrollsystem.jomariabejo.controller;
+    opens com.payrollsystem.jomariabejo.controller to javafx.fxml;
 }

@@ -1,4 +1,4 @@
-package com.example.fx123;
+package com.payrollsystem.jomariabejo.controller;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -9,6 +9,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+
+import com.payrollsystem.jomariabejo.CsvUtils;
+import com.payrollsystem.jomariabejo.Employees;
+import com.payrollsystem.jomariabejo.Leaves;
+import com.payrollsystem.jomariabejo.data.CSVFileNames;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -126,7 +131,7 @@ public class LeavesController implements Runnable {
     @FXML
     void onClickedDeleteLeave(ActionEvent event) {
         CsvUtils.deleteEmployeeRecordByLineNumber(
-                MainApp.LEAVE_CSV, getTableViewSelectedLineNumber()+2);
+                CSVFileNames.LEAVE_CSV, getTableViewSelectedLineNumber()+2);
         Leaves.RECORDS.clear();
         run();
         lbl_num_emergency_result.setText("0");
@@ -199,7 +204,7 @@ public class LeavesController implements Runnable {
          * Increment the credits by checking eid and leave request type
          */
 
-        BufferedReader br = new BufferedReader(new FileReader(MainApp.LEAVE_CSV));
+        BufferedReader br = new BufferedReader(new FileReader(CSVFileNames.LEAVE_CSV));
             String line;
             boolean isheader = true;
             while((line = br.readLine()) != null) {
@@ -484,7 +489,7 @@ public class LeavesController implements Runnable {
     isLeaveDateDuplicate() {
         boolean isDuplicate = false; // assume that there is no duplicate yet
         try {
-            BufferedReader br = new BufferedReader(new FileReader(MainApp.LEAVE_CSV));
+            BufferedReader br = new BufferedReader(new FileReader(CSVFileNames.LEAVE_CSV));
             String line;
             boolean isHeader = true;
             while ((line = br.readLine()) != null) {

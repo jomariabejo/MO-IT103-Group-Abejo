@@ -1,25 +1,28 @@
-package com.example.fx123;
+package com.payrollsystem.jomariabejo.controller;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import javafx.animation.PauseTransition;
+
+import com.payrollsystem.jomariabejo.Employees;
+import com.payrollsystem.jomariabejo.data.CSVFileNames;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.util.Duration;
 
 public class LoginController {
-    @FXML private TextField txtField_employeeNumber;
+    @FXML
+    private TextField txtField_employeeNumber;
 
-    @FXML private PasswordField pwField_password;
+    @FXML
+    private PasswordField pwField_password;
 
     private boolean verifyUser(String user, String pwd) {
 
         try {
-            BufferedReader br = new BufferedReader(new FileReader(MainApp.EMPLOYEE_CREDENTIALS_CSV));
+            BufferedReader br = new BufferedReader(new FileReader(CSVFileNames.EMPLOYEE_CREDENTIALS_CSV));
             String line;
             while ((line = br.readLine()) != null) {
                 String [] arrCredentials = line.split(",");

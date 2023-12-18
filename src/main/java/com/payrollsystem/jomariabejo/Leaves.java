@@ -1,4 +1,6 @@
-package com.example.fx123;
+package com.payrollsystem.jomariabejo;
+
+import com.payrollsystem.jomariabejo.data.CSVFileNames;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -55,7 +57,7 @@ public class Leaves {
 
     public static void addAllLeaves() {
         try {
-            BufferedReader br = new BufferedReader(new FileReader(MainApp.LEAVE_CSV));
+            BufferedReader br = new BufferedReader(new FileReader(CSVFileNames.LEAVE_CSV));
             boolean headers = true;
             String line;
 
@@ -86,7 +88,7 @@ public class Leaves {
         if (true) {
             try {
                 BufferedWriter writer =
-                        new BufferedWriter(new FileWriter(MainApp.LEAVE_CSV, true));
+                        new BufferedWriter(new FileWriter(CSVFileNames.LEAVE_CSV, true));
                 writer.write(toCommaString());
                 writer.newLine();
                 writer.close();

@@ -1,4 +1,4 @@
-package com.example.fx123;
+package com.payrollsystem.jomariabejo.controller;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -7,6 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+
+import com.payrollsystem.jomariabejo.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;

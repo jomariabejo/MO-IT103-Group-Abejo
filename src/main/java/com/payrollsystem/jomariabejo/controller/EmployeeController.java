@@ -1,4 +1,4 @@
-package com.example.fx123;
+package com.payrollsystem.jomariabejo.controller;
 
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -6,13 +6,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
+import com.payrollsystem.jomariabejo.Attendance;
+import com.payrollsystem.jomariabejo.CsvUtils;
+import com.payrollsystem.jomariabejo.Employees;
+import com.payrollsystem.jomariabejo.data.CSVFileNames;
 import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
@@ -429,7 +433,7 @@ public class EmployeeController implements Runnable {
                         if (isAddNewEmployee) {
                             System.out.println(employeeDetailsTextFieldToCsvString());
                             BufferedWriter writer =
-                                    new BufferedWriter(new FileWriter(MainApp.EMPLOYEE_DETAILS_CSV, true));
+                                    new BufferedWriter(new FileWriter(CSVFileNames.EMPLOYEE_DETAILS_CSV, true));
                             // 'true' flag is used to append data to the existing file.
                             // Write the new employee details to the file
 
@@ -465,9 +469,9 @@ public class EmployeeController implements Runnable {
                             if (checkFieldsThatContainsNumbers()) {
                                 System.out.println("CheckFieldsThatContainsNumbers has been accessed at line 475");
                                 String[] newValues = employeeDetailsTextFieldToTabularSeparatedValue().split("\t");
-                                CsvUtils.updateByLineNumber(MainApp.EMPLOYEE_DETAILS_CSV,
+                                CsvUtils.updateByLineNumber(CSVFileNames.EMPLOYEE_DETAILS_CSV,
                                         CsvUtils.findLineNumberByEmployeeNumber(
-                                                MainApp.EMPLOYEE_DETAILS_CSV, tf_employee_number.getText()),
+                                                CSVFileNames.EMPLOYEE_DETAILS_CSV, tf_employee_number.getText()),
                                         newValues);
                                 resetDetailsTextField(actionEvent);
 
@@ -515,9 +519,9 @@ public class EmployeeController implements Runnable {
 
     public void onDeleteEmployeeClicked(ActionEvent actionEvent) {
         System.out.println("Start deleting employee here...");
-        CsvUtils.deleteEmployeeRecordByLineNumber(MainApp.EMPLOYEE_DETAILS_CSV,
+        CsvUtils.deleteEmployeeRecordByLineNumber(CSVFileNames.EMPLOYEE_DETAILS_CSV,
                 CsvUtils.findLineNumberByEmployeeNumber(
-                        MainApp.EMPLOYEE_DETAILS_CSV, tableViewSelectedEmployeeNumber));
+                        CSVFileNames.EMPLOYEE_DETAILS_CSV, tableViewSelectedEmployeeNumber));
         refreshEmployeeScene(actionEvent);
 
         // Refresh Employee Records

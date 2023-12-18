@@ -1,4 +1,6 @@
-package com.example.fx123;
+package com.payrollsystem.jomariabejo;
+
+import com.payrollsystem.jomariabejo.data.CSVFileNames;
 
 import java.io.*;
 import java.text.DecimalFormat;
@@ -10,7 +12,7 @@ public class CsvUtils {
     public static void addAllEmployee() {
         BufferedReader br = null;
         try {
-            br = new BufferedReader(new FileReader(MainApp.EMPLOYEE_DETAILS_CSV));
+            br = new BufferedReader(new FileReader(CSVFileNames.EMPLOYEE_DETAILS_CSV));
             String line;
             boolean is_header = true;
             while ((line = br.readLine()) != null) {
@@ -108,7 +110,7 @@ public class CsvUtils {
     }
     public static void addAllAttendanceRecord() {
         try {
-            BufferedReader br = new BufferedReader(new FileReader(MainApp.ATTENDANCE_CSV));
+            BufferedReader br = new BufferedReader(new FileReader(CSVFileNames.ATTENDANCE_CSV));
             String line;
             boolean is_header = true;
             while ((line = br.readLine()) != null) {
@@ -248,7 +250,7 @@ public class CsvUtils {
     }
     public static void updateAttendanceCSVViaOldStringtoNewString(String oldString, String newString) throws IOException {
         List<String> updatedLines = new ArrayList<>();
-        BufferedReader br = new BufferedReader(new FileReader(MainApp.ATTENDANCE_CSV));
+        BufferedReader br = new BufferedReader(new FileReader(CSVFileNames.ATTENDANCE_CSV));
         String line;
         boolean isHeader = true;
         while ((line = br.readLine()) != null) {
@@ -271,7 +273,7 @@ public class CsvUtils {
                 updatedLines.add(line);
             }
         }
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(MainApp.ATTENDANCE_CSV))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(CSVFileNames.ATTENDANCE_CSV))) {
             for (String writeLine : updatedLines) {
                 writer.write(writeLine);
                 writer.newLine();

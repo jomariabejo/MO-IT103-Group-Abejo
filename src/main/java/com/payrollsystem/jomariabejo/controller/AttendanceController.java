@@ -1,10 +1,15 @@
-package com.example.fx123;
+package com.payrollsystem.jomariabejo.controller;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
+import com.payrollsystem.jomariabejo.Attendance;
+import com.payrollsystem.jomariabejo.CsvUtils;
+import com.payrollsystem.jomariabejo.Employees;
+import com.payrollsystem.jomariabejo.data.CSVFileNames;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -86,7 +91,7 @@ public class AttendanceController implements Runnable {
     void handleDeleteAttendanceClick(ActionEvent event) {
         try {
             CsvUtils.deleteEmployeeRecordByLineNumber(
-                    MainApp.ATTENDANCE_CSV, tableViewSelectedLineNumber + 2);
+                    CSVFileNames.ATTENDANCE_CSV, tableViewSelectedLineNumber + 2);
             refreshAttendanceList(event);
             run();
             clearTextField(event);
@@ -186,7 +191,7 @@ public class AttendanceController implements Runnable {
         if (isAttendanceFieldsBlank() && btn_save.getText().equals("Save")) {
             System.out.println(attendanceDetailsTextFieldToCSVString());
             BufferedWriter writer =
-                    new BufferedWriter(new FileWriter(MainApp.ATTENDANCE_CSV, true));
+                    new BufferedWriter(new FileWriter(CSVFileNames.ATTENDANCE_CSV, true));
             // 'true' flag is used to append data to the existing file.
             // Write the new employee details to the file
             writer.write(
