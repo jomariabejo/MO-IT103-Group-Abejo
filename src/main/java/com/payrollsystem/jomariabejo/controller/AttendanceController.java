@@ -6,9 +6,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import com.payrollsystem.jomariabejo.Attendance;
-import com.payrollsystem.jomariabejo.CsvUtils;
-import com.payrollsystem.jomariabejo.Employees;
+import com.payrollsystem.jomariabejo.model.Attendance;
+import com.payrollsystem.jomariabejo.utils.CsvUtils;
+import com.payrollsystem.jomariabejo.model.Employee;
 import com.payrollsystem.jomariabejo.data.CSVFileNames;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,46 +26,66 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class AttendanceController implements Runnable {
     private String getTableSelectedItemString;
 
-    @FXML private TableView<Attendance> attendanceTableView;
+    @FXML
+    private TableView<Attendance> attendanceTableView;
 
-    @FXML private Button btn_attendance;
+    @FXML
+    private Button btn_attendance;
 
-    @FXML private TableColumn<Attendance, String> date;
+    @FXML
+    private TableColumn<Attendance, String> date;
 
-    @FXML private DatePicker datePicker;
+    @FXML
+    private DatePicker datePicker;
 
-    @FXML private TableColumn<Attendance, Integer> employee_number;
+    @FXML
+    private TableColumn<Attendance, Integer> employee_number;
 
-    @FXML private TableColumn<Attendance, String> f_name;
+    @FXML
+    private TableColumn<Attendance, String> first_name;
 
-    @FXML private TableColumn<Attendance, String> l_name;
+    @FXML
+    private TableColumn<Attendance, String> last_name;
 
-    @FXML private TextField tf_employee_number;
+    @FXML
+    private TextField tf_employee_number;
 
-    @FXML private TextField tf_fName;
+    @FXML
+    private TextField tf_fName;
 
-    @FXML private TextField tf_lName;
+    @FXML
+    private TextField tf_lName;
 
-    @FXML private TextField tf_search;
+    @FXML
+    private TextField tf_search;
 
-    @FXML private TextField tf_timeIN;
+    @FXML
+    private TextField tf_timeIN;
 
-    @FXML private TextField tf_timeOUT;
+    @FXML
+    private TextField tf_timeOUT;
 
-    @FXML private TableColumn<Attendance, String> timeIn;
+    @FXML
+    private TableColumn<Attendance, String> time_in;
 
-    @FXML private TableColumn<Attendance, String> timeOut;
+    @FXML
+    private TableColumn<Attendance, String> time_out;
 
-    @FXML private Button btn_cancel;
+    @FXML
+    private Button btn_cancel;
 
-    @FXML private Button btn_save;
+    @FXML
+    private Button btn_save;
 
-    @FXML private Button btn_delete;
+    @FXML
+    private Button btn_delete;
 
-    @FXML private Label lbl_attendance_size;
+    @FXML
+    private Label lbl_attendance_size;
 
     // This will be use to check the search bar if it has values
     private int tableViewSelectedLineNumber;
+
     @FXML
     void filterTableData(ActionEvent event) {
         int employeeCounter = 0;
@@ -81,7 +101,8 @@ public class AttendanceController implements Runnable {
             } else if (item.getFullName().toLowerCase().contains(searchText)) {
                 attendanceTableView.getItems().add(item);
                 employeeCounter++;
-            };
+            }
+            ;
         }
         // Change Employee Number Size
         lbl_attendance_size.setText(String.valueOf(employeeCounter));
@@ -118,16 +139,16 @@ public class AttendanceController implements Runnable {
     public void setCellValueFactoryTableColumns() {
         employee_number.setCellValueFactory(
                 new PropertyValueFactory<Attendance, Integer>("employee_number"));
-        l_name.setCellValueFactory(
-                new PropertyValueFactory<Attendance, String>("l_name"));
-        f_name.setCellValueFactory(
-                new PropertyValueFactory<Attendance, String>("f_name"));
+        last_name.setCellValueFactory(
+                new PropertyValueFactory<Attendance, String>("last_name"));
+        first_name.setCellValueFactory(
+                new PropertyValueFactory<Attendance, String>("first_name"));
         date.setCellValueFactory(
                 new PropertyValueFactory<Attendance, String>("date"));
-        timeIn.setCellValueFactory(
-                new PropertyValueFactory<Attendance, String>("timeIn"));
-        timeOut.setCellValueFactory(
-                new PropertyValueFactory<Attendance, String>("timeOut"));
+        time_in.setCellValueFactory(
+                new PropertyValueFactory<Attendance, String>("time_in"));
+        time_out.setCellValueFactory(
+                new PropertyValueFactory<Attendance, String>("time_out"));
     }
 
     public void handleEmployeeClick(ActionEvent actionEvent) {
@@ -182,6 +203,7 @@ public class AttendanceController implements Runnable {
         btn_delete.setDisable(true);
         disableTextFields();
     }
+
     public void handleSaveClick(ActionEvent actionEvent) throws IOException {
 
 
@@ -214,17 +236,18 @@ public class AttendanceController implements Runnable {
          */
         if (btn_save.getText().equals("Update")) {
             if (isEmployeeNumberExist((tf_employee_number.getText()))) {
-               System.out.println(getTableSelectedItemString);
-               try {
-                   CsvUtils.updateAttendanceCSVViaOldStringtoNewString(getTableSelectedItemString, attendanceDetailsTextFieldToCSVString());
-                   afterCreateOrUpdateAttendance(actionEvent);
-               } catch (IOException e) {
-                       e.printStackTrace();
-                       throw new RuntimeException(e);
-                    };
+                System.out.println(getTableSelectedItemString);
+                try {
+                    CsvUtils.updateAttendanceCSVViaOldStringtoNewString(getTableSelectedItemString, attendanceDetailsTextFieldToCSVString());
+                    afterCreateOrUpdateAttendance(actionEvent);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
                 }
+                ;
             }
         }
+    }
 
     public void afterCreateOrUpdateAttendance(ActionEvent actionEvent) {
         refreshAttendanceList(actionEvent);
@@ -270,6 +293,7 @@ public class AttendanceController implements Runnable {
         tf_timeOUT.setText("");
         datePicker.setValue(null);
     }
+
     public void tableViewSelectedItemListener() {
         attendanceTableView.getSelectionModel().selectedItemProperty().addListener(
                 (obs, oldSelection, attendance) -> {
@@ -306,11 +330,11 @@ public class AttendanceController implements Runnable {
 
                         tf_employee_number.setText(
                                 String.valueOf(attendance.getEmployee_number()));
-                        tf_fName.setText(attendance.getF_name());
-                        tf_lName.setText(attendance.getL_name());
+                        tf_fName.setText(attendance.getFirst_name());
+                        tf_lName.setText(attendance.getLast_name());
                         datePicker.setValue(attendanceValue);
-                        tf_timeIN.setText(attendance.getTimeIn());
-                        tf_timeOUT.setText(attendance.getTimeOut());
+                        tf_timeIN.setText(attendance.getTime_in());
+                        tf_timeOUT.setText(attendance.getTime_out());
                         enableTextFields();
 
                         /**
@@ -335,7 +359,7 @@ public class AttendanceController implements Runnable {
 
     public boolean isAttendanceFieldsBlank() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        if(datePicker == null) {
+        if (datePicker == null) {
             alert.setTitle("Blank attendance date");
             alert.setContentText("Please select the calendar icon and choose attendance date.");
             alert.show();
@@ -351,7 +375,7 @@ public class AttendanceController implements Runnable {
                 tf_timeIN,
                 tf_timeOUT,
         };
-        String [] strTextFieldsName = {
+        String[] strTextFieldsName = {
                 "Employee number",
                 "First name",
                 "Last name",
@@ -383,49 +407,44 @@ public class AttendanceController implements Runnable {
             alert.show();
             tf_employee_number.requestFocus();
             return false;
-        }
-        else if (!isNotTimeDigitOnly(tf_timeIN)) {
+        } else if (!isNotTimeDigitOnly(tf_timeIN)) {
             alert.setTitle("Invalid time in input");
             alert.setHeaderText("Your Time in input = " + tf_timeIN.getText());
             alert.setContentText("Please follow the format: hh:mm ");
             alert.show();
             tf_timeIN.requestFocus();
             return false;
-        }
-
-        else if (!isNotTimeDigitOnly(tf_timeOUT)) {
+        } else if (!isNotTimeDigitOnly(tf_timeOUT)) {
             alert.setTitle("Invalid time out input");
             alert.setHeaderText("Your Time in input = " + tf_timeOUT.getText());
             alert.setContentText("Please follow the format: hh:mm ");
             alert.show();
             tf_timeOUT.requestFocus();
             return false;
-        }
-        else {
+        } else {
             return true;
         }
     }
 
 
     private boolean isNotTimeDigitOnly(TextField tf) {
-        String strTime = tf.getText().replace(":","");
-        try{
+        String strTime = tf.getText().replace(":", "");
+        try {
             int numTimeIn = Integer.parseInt(strTime);
             boolean isTimeInDigitsOnly = String.valueOf(Integer.valueOf(numTimeIn)).matches("[0-9]+");
-            if (isTimeInDigitsOnly){
+            if (isTimeInDigitsOnly) {
                 System.out.println("Yes it is digit only");
                 return true;
             }
-        }
-        catch (NumberFormatException exception) {
-            System.out.println("No it is not string digit only "+exception.getMessage());
+        } catch (NumberFormatException exception) {
+            System.out.println("No it is not string digit only " + exception.getMessage());
         }
         return false;
     }
 
     public static boolean isEmployeeNumberExist(String employeeNumber) {
-        for (int i = 0; i < Employees.records.size(); i++)
-            if (Employees.records.get(i).getId().equals(employeeNumber))
+        for (int i = 0; i < Employee.records.size(); i++)
+            if (Employee.records.get(i).getId().equals(employeeNumber))
                 return true;
 
         return false;

@@ -1,56 +1,58 @@
-package com.payrollsystem.jomariabejo;
+package com.payrollsystem.jomariabejo.model;
+
+import com.payrollsystem.jomariabejo.utils.CsvUtils;
 
 import java.util.ArrayList;
 
 public class Attendance {
     public static ArrayList<Attendance> records = new ArrayList<>();
     private int employee_number;
-    private String l_name;
-    private String f_name;
+    private String last_name;
+    private String first_name;
     private String date;
-    private String timeIn;
-    private String timeOut;
+    private String time_in;
+    private String time_out;
 
     public Attendance(int employeeNumber, String lastName, String firstName,
                       String date, String timeIn, String timeOut) {
         this.employee_number = employeeNumber;
-        this.l_name = lastName;
-        this.f_name = firstName;
+        this.last_name = lastName;
+        this.first_name = firstName;
         this.date = date;
-        this.timeIn = timeIn;
-        this.timeOut = timeOut;
+        this.time_in = timeIn;
+        this.time_out = timeOut;
     }
 
     public int getEmployee_number() {
         return employee_number;
     }
 
-    public String getL_name() {
-        return l_name;
+    public String getLast_name() {
+        return last_name;
     }
 
-    public String getF_name() {
-        return f_name;
+    public String getFirst_name() {
+        return first_name;
     }
 
     public String getDate() {
         return date;
     }
 
-    public String getTimeIn() {
-        return timeIn;
+    public String getTime_in() {
+        return time_in;
     }
 
-    public String getTimeOut() {
-        return timeOut;
+    public String getTime_out() {
+        return time_out;
     }
 
     @Override
     public String toString() {
         return "Attendance{"
-                + "employee_number=" + employee_number + ", lName='" + l_name + '\''
-                + ", fName='" + f_name + '\'' + ", date=" + date + ", timeIn=" + timeIn
-                + ", timeOut=" + timeOut + '}';
+                + "employee_number=" + employee_number + ", lName='" + last_name + '\''
+                + ", fName='" + first_name + '\'' + ", date=" + date + ", timeIn=" + time_in
+                + ", timeOut=" + time_out + '}';
     }
 
     public static void addAllAttendanceRecord() {
@@ -62,20 +64,20 @@ public class Attendance {
     }
 
     public String getFullName() {
-        return f_name + " " + l_name;
+        return first_name + " " + last_name;
     }
 
     public String toCommaSeparatedValueString () {
         return (String.valueOf(employee_number)
                 + ","
-                + l_name
+                + last_name
                 + ","
-                + f_name
+                + first_name
                 + ","
                 + date
                 + ","
-                + timeIn
+                + time_in
                 + ","
-                + timeOut);
+                + time_out);
     }
 }

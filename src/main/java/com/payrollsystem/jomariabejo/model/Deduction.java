@@ -1,4 +1,4 @@
-package com.payrollsystem.jomariabejo;
+package com.payrollsystem.jomariabejo.model;
 
 public class Deduction {
     private final double basic_salary;

@@ -371,11 +371,11 @@
                 <TableView fx:id="attendanceTableView">
                     <columns>
                         <TableColumn fx:id="employee_number" prefWidth="75.0" text="Employee #" />
-                        <TableColumn fx:id="l_name" prefWidth="75.0" text="Last Name" />
-                        <TableColumn fx:id="f_name" prefWidth="75.0" text="First Name" />
+                        <TableColumn fx:id="last_name" prefWidth="75.0" text="Last Name" />
+                        <TableColumn fx:id="first_name" prefWidth="75.0" text="First Name" />
                         <TableColumn fx:id="date" prefWidth="75.0" text="Date" />
-                        <TableColumn fx:id="timeIn" prefWidth="75.0" text="Time-in" />
-                        <TableColumn fx:id="timeOut" prefWidth="75.0" text="Time-out" />
+                        <TableColumn fx:id="time_in" prefWidth="75.0" text="Time-in" />
+                        <TableColumn fx:id="time_out" prefWidth="75.0" text="Time-out" />
                     </columns>
                 </TableView>
             </items>

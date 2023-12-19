@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import com.payrollsystem.jomariabejo.Employees;
+import com.payrollsystem.jomariabejo.model.Employee;
 import com.payrollsystem.jomariabejo.data.CSVFileNames;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -47,7 +47,7 @@ public class LoginController {
             alert.showAndWait();
 
             // Populate Employees
-            Employees.addAllEmployees();
+            Employee.addAllEmployees();
             // Change Scene
             try {
                 SceneController.employeeScene(event);

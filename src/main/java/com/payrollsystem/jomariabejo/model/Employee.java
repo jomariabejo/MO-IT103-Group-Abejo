@@ -1,9 +1,11 @@
-package com.payrollsystem.jomariabejo;
+package com.payrollsystem.jomariabejo.model;
+
+import com.payrollsystem.jomariabejo.utils.CsvUtils;
 
 import java.util.ArrayList;
 
-public class Employees {
-    public static ArrayList<Employees> records = new ArrayList<>();
+public class Employee {
+    public static ArrayList<Employee> records = new ArrayList<>();
     private final String id;
     private final String l_name;
     private final String f_name;
@@ -101,12 +103,12 @@ public class Employees {
         return hourly_rate;
     }
 
-    Employees(String id, String lName, String fName, String birthDate,
-              String address, String phoneNumber, String sssNumber,
-              String philhealthNumber, String tinNumber, String pagibigNumber,
-              String status, String position, String immediateSupervisor,
-              int basicSalary, int riceSubsidy, int phoneAlw, int clothAlw,
-              int grossSemiMonthlyRate, float hourlyRate) {
+    public Employee(String id, String lName, String fName, String birthDate,
+                    String address, String phoneNumber, String sssNumber,
+                    String philhealthNumber, String tinNumber, String pagibigNumber,
+                    String status, String position, String immediateSupervisor,
+                    int basicSalary, int riceSubsidy, int phoneAlw, int clothAlw,
+                    int grossSemiMonthlyRate, float hourlyRate) {
         this.id = id;
         this.l_name = lName;
         this.f_name = fName;

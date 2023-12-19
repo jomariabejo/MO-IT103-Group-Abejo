@@ -10,9 +10,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.payrollsystem.jomariabejo.CsvUtils;
-import com.payrollsystem.jomariabejo.Employees;
-import com.payrollsystem.jomariabejo.Leaves;
+import com.payrollsystem.jomariabejo.utils.CsvUtils;
+import com.payrollsystem.jomariabejo.model.Employee;
+import com.payrollsystem.jomariabejo.model.Leaves;
 import com.payrollsystem.jomariabejo.data.CSVFileNames;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -567,8 +567,8 @@ public class LeavesController implements Runnable {
     }
 
     public boolean isEmployeeNumberExist() {
-        for (int i = 0; i < Employees.records.size(); i++) {
-            if (Employees.records.get(i).getId().equals(String.valueOf(tf_employee_number.getText()))) {
+        for (int i = 0; i < Employee.records.size(); i++) {
+            if (Employee.records.get(i).getId().equals(String.valueOf(tf_employee_number.getText()))) {
                 return true;
             }
         }

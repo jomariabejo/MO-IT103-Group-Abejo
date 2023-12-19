@@ -1,4 +1,4 @@
-package com.payrollsystem.jomariabejo;
+package com.payrollsystem.jomariabejo.model;
 
 import com.payrollsystem.jomariabejo.data.CSVFileNames;
 
@@ -102,8 +102,8 @@ public class Leaves {
 
 
     public boolean isEmployeeNumberExist() {
-        for (int i = 0; i < Employees.records.size(); i++) {
-            if (Employees.records.get(i).getId().equals(String.valueOf(eid))) {
+        for (int i = 0; i < Employee.records.size(); i++) {
+            if (Employee.records.get(i).getId().equals(String.valueOf(eid))) {
                 return true;
             }
         }

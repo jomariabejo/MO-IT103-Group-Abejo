@@ -7,8 +7,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-
-import com.payrollsystem.jomariabejo.*;
+import com.payrollsystem.jomariabejo.model.Attendance;
+import com.payrollsystem.jomariabejo.model.Deduction;
+import com.payrollsystem.jomariabejo.model.Employee;
+import com.payrollsystem.jomariabejo.Salary;
+import com.payrollsystem.jomariabejo.utils.CsvUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -17,63 +20,92 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 public class SalaryController implements Runnable {
-    @FXML private ComboBox<String> cb_select_MM;
+    @FXML
+    private ComboBox<String> cb_select_MM;
 
-    @FXML private TextField txtField_select_YY;
+    @FXML
+    private TextField txtField_select_YY;
 
-    @FXML private Label lbl_basic_salary;
+    @FXML
+    private Label lbl_basic_salary;
 
-    @FXML private Label lbl_fullname;
+    @FXML
+    private Label lbl_fullname;
 
-    @FXML private Label lbl_hourly_rate;
+    @FXML
+    private Label lbl_hourly_rate;
 
-    @FXML private Label lbl_net_salary;
+    @FXML
+    private Label lbl_net_salary;
 
-    @FXML private Label lbl_pagibig;
+    @FXML
+    private Label lbl_pagibig;
 
-    @FXML private Label lbl_philhealth;
+    @FXML
+    private Label lbl_philhealth;
 
-    @FXML private Label lbl_sss;
+    @FXML
+    private Label lbl_sss;
 
-    @FXML private Label lbl_total_gross_salary;
+    @FXML
+    private Label lbl_total_gross_salary;
 
-    @FXML private Label lbl_total_gross_salary1;
+    @FXML
+    private Label lbl_total_gross_salary1;
 
-    @FXML private Label lbl_total_hours_worked;
+    @FXML
+    private Label lbl_total_hours_worked;
 
-    @FXML private Label lbl_w1_gross_salary;
+    @FXML
+    private Label lbl_w1_gross_salary;
 
-    @FXML private Label lbl_w1_hours_worked;
+    @FXML
+    private Label lbl_w1_hours_worked;
 
-    @FXML private Label lbl_w2_gross_salary;
+    @FXML
+    private Label lbl_w2_gross_salary;
 
-    @FXML private Label lbl_w2_hours_worked;
+    @FXML
+    private Label lbl_w2_hours_worked;
 
-    @FXML private Label lbl_w3_gross_salary;
+    @FXML
+    private Label lbl_w3_gross_salary;
 
-    @FXML private Label lbl_w3_hours_worked;
+    @FXML
+    private Label lbl_w3_hours_worked;
 
-    @FXML private Label lbl_w4_gross_salary;
+    @FXML
+    private Label lbl_w4_gross_salary;
 
-    @FXML private Label lbl_w4_hours_worked;
+    @FXML
+    private Label lbl_w4_hours_worked;
 
-    @FXML private Label lbl_w5_gross_salary;
+    @FXML
+    private Label lbl_w5_gross_salary;
 
-    @FXML private Label lbl_w5_hours_worked;
+    @FXML
+    private Label lbl_w5_hours_worked;
 
-    @FXML private Label lbl_w6_gross_salary;
+    @FXML
+    private Label lbl_w6_gross_salary;
 
-    @FXML private Label lbl_w6_hours_worked;
+    @FXML
+    private Label lbl_w6_hours_worked;
 
-    @FXML private Label lbl_witholding_tax;
+    @FXML
+    private Label lbl_witholding_tax;
 
-    @FXML private TextField txtField_eid;
+    @FXML
+    private TextField txtField_eid;
 
-    @FXML private Label finalweek6lbl;
+    @FXML
+    private Label finalweek6lbl;
 
-    @FXML private Label lbl_tax; // taxable income
+    @FXML
+    private Label lbl_tax; // taxable income
 
-    @FXML private Label lbl_total_deductions;
+    @FXML
+    private Label lbl_total_deductions;
 
     @FXML
     void onAttendanceClicked(ActionEvent event) {
@@ -173,6 +205,7 @@ public class SalaryController implements Runnable {
         }
         return searched_month;
     }
+
     public void search_employee(ActionEvent actionEvent) throws ParseException {
 
         int employee_number = Integer.parseInt(txtField_eid.getText());
@@ -194,12 +227,12 @@ public class SalaryController implements Runnable {
          * Set Employee Details
          */
         lbl_fullname.setText(
-                Employees.records.get(employee_number - 10001).getF_name() + " "
-                        + Employees.records.get(employee_number - 10001).getL_name());
+                Employee.records.get(employee_number - 10001).getF_name() + " "
+                        + Employee.records.get(employee_number - 10001).getL_name());
         lbl_hourly_rate.setText(String.valueOf(
-                Employees.records.get(employee_number - 10001).getHourly_rate()));
+                Employee.records.get(employee_number - 10001).getHourly_rate()));
         lbl_basic_salary.setText(String.valueOf(
-                Employees.records.get(employee_number - 10001).getBasic_salary()));
+                Employee.records.get(employee_number - 10001).getBasic_salary()));
 
         /**
          * Set Hours Worked Breakdown
@@ -260,7 +293,7 @@ public class SalaryController implements Runnable {
         lbl_philhealth.setText(
                 String.valueOf(decimalFormat.format(getDeduction.deductPhilHealth())));
 
-        lbl_total_deductions.setText("-"+String.valueOf(decimalFormat.format(getDeduction.TotalContribution())));
+        lbl_total_deductions.setText("-" + String.valueOf(decimalFormat.format(getDeduction.TotalContribution())));
 
         /**
          * Set value taxable income
@@ -272,7 +305,7 @@ public class SalaryController implements Runnable {
          * Set Value for tax
          */
 
-        lbl_witholding_tax.setText("-"+CsvUtils.makeStringLengthToTwenty(String.valueOf(decimalFormat.format(getDeduction.getWithholdingTax()))));
+        lbl_witholding_tax.setText("-" + CsvUtils.makeStringLengthToTwenty(String.valueOf(decimalFormat.format(getDeduction.getWithholdingTax()))));
 
         /**
          * Set Net Salary
@@ -296,8 +329,7 @@ public class SalaryController implements Runnable {
             finalweek6lbl.setVisible(true);
             lbl_w6_gross_salary.setVisible(true);
             lbl_w6_hours_worked.setVisible(true);
-        }
-        else {
+        } else {
             finalweek6lbl.setVisible(false);
             lbl_w6_gross_salary.setVisible(false);
             lbl_w6_hours_worked.setVisible(false);
@@ -312,9 +344,9 @@ public class SalaryController implements Runnable {
                     && txtField_select_YY.getText().matches("\\d*")) {
                 boolean is_employee_found = false;
                 // check if employee number exists
-                for (int i = 0; i < Employees.records.size(); i++) {
+                for (int i = 0; i < Employee.records.size(); i++) {
                     // continue generating employee salary
-                    if (Employees.records.get(i).getId().equals(txtField_eid.getText())) {
+                    if (Employee.records.get(i).getId().equals(txtField_eid.getText())) {
                         is_employee_found = true;
                         search_employee(actionEvent);
                         // check if the net salary is negative, if true, the employee is
@@ -354,14 +386,12 @@ public class SalaryController implements Runnable {
                         "Please check your text field, it might have invalid characters");
                 alert.showAndWait();
             }
-        }
-
-        catch (NumberFormatException numberFormatException) {
-                alert.setTitle("NumberFormatException");
-                alert.setContentText(numberFormatException.getMessage());
-                alert.show();
-                txtField_select_YY.requestFocus();
-            } catch (ParseException e) {
+        } catch (NumberFormatException numberFormatException) {
+            alert.setTitle("NumberFormatException");
+            alert.setContentText(numberFormatException.getMessage());
+            alert.show();
+            txtField_select_YY.requestFocus();
+        } catch (ParseException e) {
             alert.setTitle("ParseException");
             alert.setContentText(e.getMessage());
             alert.show();
@@ -374,7 +404,7 @@ public class SalaryController implements Runnable {
     public boolean hasWeekSix() throws ParseException {
 
         int assumed_day = 1;
-        String dateString = String.valueOf(monthWordToInt())+"/"+assumed_day+"/"+String.valueOf(txtField_select_YY.getText());
+        String dateString = String.valueOf(monthWordToInt()) + "/" + assumed_day + "/" + String.valueOf(txtField_select_YY.getText());
         SimpleDateFormat dateFormat = new SimpleDateFormat("M/d/yyyy");
         System.out.println(dateString);
 

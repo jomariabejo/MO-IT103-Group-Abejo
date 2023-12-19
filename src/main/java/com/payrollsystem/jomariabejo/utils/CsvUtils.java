@@ -1,16 +1,18 @@
-package com.payrollsystem.jomariabejo;
+package com.payrollsystem.jomariabejo.utils;
 
+import com.payrollsystem.jomariabejo.model.Attendance;
+import com.payrollsystem.jomariabejo.model.Employee;
 import com.payrollsystem.jomariabejo.data.CSVFileNames;
 
 import java.io.*;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class CsvUtils {
+
     public static void addAllEmployee() {
-        BufferedReader br = null;
+        BufferedReader br;
         try {
             br = new BufferedReader(new FileReader(CSVFileNames.EMPLOYEE_DETAILS_CSV));
             String line;
@@ -82,32 +84,33 @@ public class CsvUtils {
                 String GrossSemimonthlyRate = (String.valueOf(processedColumn.get(17)).replaceAll("\"", ""));
                 String HourlyRate = (String.valueOf(processedColumn.get(18)).replaceAll("\"", ""));
 
-                Employees employees = new Employees(
-                        String.valueOf(processedColumn.get(0)).replaceAll("\"",""),
-                        String.valueOf(processedColumn.get(1)).replaceAll("\"",""),
-                        String.valueOf(processedColumn.get(2)).replaceAll("\"",""),
-                        String.valueOf(processedColumn.get(3)).replaceAll("\"",""),
-                        String.valueOf(processedColumn.get(4)).replaceAll("\"",""),
-                        String.valueOf(processedColumn.get(5)).replaceAll("\"",""),
-                        String.valueOf(processedColumn.get(6)).replaceAll("\"",""),
-                        String.valueOf(processedColumn.get(7)).replaceAll("\"",""),
-                        String.valueOf(processedColumn.get(8)).replaceAll("\"",""),
-                        String.valueOf(processedColumn.get(9)).replaceAll("\"",""),
-                        String.valueOf(processedColumn.get(10)).replaceAll("\"",""),
-                        String.valueOf(processedColumn.get(11)).replaceAll("\"",""),
-                        String.valueOf(processedColumn.get(12)).replaceAll("\"",""),
+                Employee employee = new Employee(
+                        String.valueOf(processedColumn.get(0)).replaceAll("\"", ""),
+                        String.valueOf(processedColumn.get(1)).replaceAll("\"", ""),
+                        String.valueOf(processedColumn.get(2)).replaceAll("\"", ""),
+                        String.valueOf(processedColumn.get(3)).replaceAll("\"", ""),
+                        String.valueOf(processedColumn.get(4)).replaceAll("\"", ""),
+                        String.valueOf(processedColumn.get(5)).replaceAll("\"", ""),
+                        String.valueOf(processedColumn.get(6)).replaceAll("\"", ""),
+                        String.valueOf(processedColumn.get(7)).replaceAll("\"", ""),
+                        String.valueOf(processedColumn.get(8)).replaceAll("\"", ""),
+                        String.valueOf(processedColumn.get(9)).replaceAll("\"", ""),
+                        String.valueOf(processedColumn.get(10)).replaceAll("\"", ""),
+                        String.valueOf(processedColumn.get(11)).replaceAll("\"", ""),
+                        String.valueOf(processedColumn.get(12)).replaceAll("\"", ""),
                         Integer.parseInt((BasicSalary).replace(",", "")), // remove comma
                         Integer.parseInt((RiceSubsidy).replace(",", "")), // remove comma
                         Integer.parseInt((PhoneAllowance).replace(",", "")), // remove comma
                         Integer.parseInt((ClothingAllowance).replace(",", "")), // remove comma
                         Integer.parseInt((GrossSemimonthlyRate).replace(",", "")), // remove comma
                         Float.parseFloat((HourlyRate).replace(",", ""))); // remove comma
-                Employees.records.add(employees);
+                Employee.records.add(employee);
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
+
     public static void addAllAttendanceRecord() {
         try {
             BufferedReader br = new BufferedReader(new FileReader(CSVFileNames.ATTENDANCE_CSV));
@@ -119,7 +122,7 @@ public class CsvUtils {
                     continue;
                 }
                 String[] splitted_data = line.split(",");
-                ArrayList < String > processedColumn = new ArrayList < String > ();
+                ArrayList<String> processedColumn = new ArrayList<String>();
                 Collections.addAll(processedColumn, splitted_data);
                 Attendance attendance = new Attendance(Integer.parseInt(String.valueOf(processedColumn.get(0))),
                         String.valueOf(processedColumn.get(1)),
@@ -133,27 +136,14 @@ public class CsvUtils {
             ioException.printStackTrace();
         }
     }
-    public static String addDoubleQuotesIfStringHasComma(String str) {
-        return str.contains(",") ? "\""+str+"\"" : str;
-    }
-
-    public static String addCommaToStrInt(String num) {
-        DecimalFormat df = new DecimalFormat("#,###");
-        return df.format(Double.valueOf(String.valueOf(num).replace(",","")));
-    }
-
-    public static String addCommaAndTwoDecimalsForFloatStr(String num) {
-        DecimalFormat df = new DecimalFormat("#,###.##");
-        return df.format(Double.valueOf(String.valueOf(num).replace(",","")));
-    }
 
     public static void updateByLineNumber(String filePath, int lineNumber, String[] newData) {
         List<String> updatedLines = new ArrayList<>();
 
         int currentLineNumber = 0; // pass over headers
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-        String line;
-        int row = lineNumber - 1;
+            String line;
+            int row = lineNumber - 1;
             while ((line = br.readLine()) != null) {
                 if (currentLineNumber == row) {
                     StringBuilder updatedLineBuilder = new StringBuilder();
@@ -200,12 +190,11 @@ public class CsvUtils {
                         return lineNumber; // found
                     }
                 }
-            }
-            else if (filepath.contains("Employee Details")) {
-                if (Employees.records.isEmpty()) Employees.addAllEmployees();
-                int [] employeesNumber = Employees.employeeNumbers();
+            } else if (filepath.contains("Employee Details")) {
+                if (Employee.records.isEmpty()) Employee.addAllEmployees();
+                int[] employeesNumber = Employee.employeeNumbers();
                 System.out.println("employees number length = " + employeesNumber.length);
-                if (Employees.records.isEmpty()) addAllEmployee();
+                if (Employee.records.isEmpty()) addAllEmployee();
                 for (int i = 0; i < employeesNumber.length; i++) {
                     lineNumber++;
                     if (Integer.parseInt(employeeNumber) == employeesNumber[i]) {
@@ -216,7 +205,7 @@ public class CsvUtils {
                 }
             }
             return 0; // not found
-            }   catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -248,6 +237,7 @@ public class CsvUtils {
             System.out.println("An error occurred while deleting the line: " + e.getMessage());
         }
     }
+
     public static void updateAttendanceCSVViaOldStringtoNewString(String oldString, String newString) throws IOException {
         List<String> updatedLines = new ArrayList<>();
         BufferedReader br = new BufferedReader(new FileReader(CSVFileNames.ATTENDANCE_CSV));
@@ -257,8 +247,7 @@ public class CsvUtils {
             if (isHeader) {
                 isHeader = false;
                 updatedLines.add("Employee #,Last Name,First Name,Date,Time-in,Time-out");
-            }
-            else if (line.equals(oldString)) {
+            } else if (line.equals(oldString)) {
                 StringBuilder updatedLineBuilder = new StringBuilder();
                 for (String data : newString.split(",")) {
                     updatedLineBuilder.append(data).append(",");
@@ -268,8 +257,7 @@ public class CsvUtils {
                 // remove the last comma
                 String output = updatedLine.substring(0, lastCommaIndex) + updatedLine.substring(lastCommaIndex + 1);
                 updatedLines.add(output);
-            }
-            else {
+            } else {
                 updatedLines.add(line);
             }
         }

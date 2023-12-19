@@ -7,9 +7,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import com.payrollsystem.jomariabejo.Attendance;
-import com.payrollsystem.jomariabejo.CsvUtils;
-import com.payrollsystem.jomariabejo.Employees;
+import com.payrollsystem.jomariabejo.model.Attendance;
+import com.payrollsystem.jomariabejo.utils.CsvUtils;
+import com.payrollsystem.jomariabejo.model.Employee;
 import com.payrollsystem.jomariabejo.data.CSVFileNames;
 import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
@@ -17,106 +17,159 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import com.payrollsystem.jomariabejo.utils.iStringUtils;
 
-public class EmployeeController implements Runnable {
+public class EmployeeController implements Runnable, iStringUtils {
     /**
      * Start of Attributes
      */
-    @FXML private Label lbl_employeeSize;
+    @FXML
+    private Label lbl_employeeSize;
 
-    @FXML private TableColumn<Employees, String> address;
+    @FXML
+    private TableColumn<Employee, String> address;
 
-    @FXML private TableColumn<Employees, Integer> basic_salary;
+    @FXML
+    private TableColumn<Employee, Integer> basic_salary;
 
-    @FXML private TableColumn<Employees, String> birthday;
+    @FXML
+    private TableColumn<Employee, String> birthday;
 
-    @FXML private Button btn_cancel;
+    @FXML
+    private Button btn_cancel;
 
-    @FXML private Button btn_deleteSelectedEmployee;
+    @FXML
+    private Button btn_deleteSelectedEmployee;
 
-    @FXML private Button btn_employee;
+    @FXML
+    private Button btn_employee;
 
-    @FXML private Button btn_saveOrUpdate;
+    @FXML
+    private Button btn_saveOrUpdate;
 
-    @FXML private TableColumn<Employees, Integer> clothing_alw;
+    @FXML
+    private TableColumn<Employee, Integer> clothing_alw;
 
-    @FXML private TableView<Employees> employeeTable;
+    @FXML
+    private TableView<Employee> employeeTable;
 
-    @FXML private TableColumn<Employees, String> f_name;
+    @FXML
+    private TableColumn<Employee, String> f_name;
 
-    @FXML private TableColumn<Employees, Integer> gross_semi_monthly_rate;
+    @FXML
+    private TableColumn<Employee, Integer> gross_semi_monthly_rate;
 
-    @FXML private TableColumn<Employees, Float> hourly_rate;
+    @FXML
+    private TableColumn<Employee, Float> hourly_rate;
 
-    @FXML private TableColumn<Employees, String> id;
+    @FXML
+    private TableColumn<Employee, String> id;
 
-    @FXML private TableColumn<Employees, String> immediate_supervisor;
+    @FXML
+    private TableColumn<Employee, String> immediate_supervisor;
 
-    @FXML private TableColumn<Employees, String> l_name;
+    @FXML
+    private TableColumn<Employee, String> l_name;
 
-    @FXML private TableColumn<Employees, String> pagibig_num;
+    @FXML
+    private TableColumn<Employee, String> pagibig_num;
 
-    @FXML private TableColumn<Employees, String> philhealth_num;
+    @FXML
+    private TableColumn<Employee, String> philhealth_num;
 
-    @FXML private TableColumn<Employees, Integer> phone_alw;
+    @FXML
+    private TableColumn<Employee, Integer> phone_alw;
 
-    @FXML private TableColumn<Employees, String> phone_num;
+    @FXML
+    private TableColumn<Employee, String> phone_num;
 
-    @FXML private TableColumn<Employees, String> position;
+    @FXML
+    private TableColumn<Employee, String> position;
 
-    @FXML private TableColumn<Employees, String> rice_subsidy;
+    @FXML
+    private TableColumn<Employee, String> rice_subsidy;
 
-    @FXML private TableColumn<Employees, String> sss_num;
+    @FXML
+    private TableColumn<Employee, String> sss_num;
 
-    @FXML private TableColumn<Employees, String> status;
+    @FXML
+    private TableColumn<Employee, String> status;
 
-    @FXML private TextField tf_address;
+    @FXML
+    private TextField tf_address;
 
-    @FXML private TextField tf_basicSalary;
+    @FXML
+    private TextField tf_basicSalary;
 
-    @FXML private DatePicker dp_birthday;
+    @FXML
+    private DatePicker dp_birthday;
 
-    @FXML private TextField tf_clothingAllowance;
+    @FXML
+    private TextField tf_clothingAllowance;
 
-    @FXML private TextField tf_employee_number;
+    @FXML
+    private TextField tf_employee_number;
 
-    @FXML private TextField tf_fName;
+    @FXML
+    private TextField tf_fName;
 
-    @FXML private TextField tf_grossSemiMonthlyRate;
+    @FXML
+    private TextField tf_grossSemiMonthlyRate;
 
-    @FXML private TextField tf_hourlyRate;
+    @FXML
+    private TextField tf_hourlyRate;
 
-    @FXML private TextField tf_immediateSupervisor;
+    @FXML
+    private TextField tf_immediateSupervisor;
 
-    @FXML private TextField tf_lName;
+    @FXML
+    private TextField tf_lName;
 
-    @FXML private TextField tf_pagibig;
+    @FXML
+    private TextField tf_pagibig;
 
-    @FXML private TextField tf_philhealth;
+    @FXML
+    private TextField tf_philhealth;
 
-    @FXML private TextField tf_phone_number;
+    @FXML
+    private TextField tf_phone_number;
 
-    @FXML private TextField tf_phoneAllowance;
+    @FXML
+    private TextField tf_phoneAllowance;
 
-    @FXML private TextField tf_position;
+    @FXML
+    private TextField tf_position;
 
-    @FXML private TextField tf_riceSubsidy;
+    @FXML
+    private TextField tf_riceSubsidy;
 
-    @FXML private TextField tf_sss;
+    @FXML
+    private TextField tf_sss;
 
-    @FXML private TextField tf_status;
+    @FXML
+    private TextField tf_status;
 
-    @FXML private TextField tf_tin;
+    @FXML
+    private TextField tf_tin;
 
-    @FXML private TableColumn<Employees, String> tin_num;
+    @FXML
+    private TableColumn<Employee, String> tin_num;
 
-    @FXML private TextField tf_search;
+    @FXML
+    private TextField tf_search;
 
     private boolean isAddNewEmployee = false;
     private String tableViewSelectedEmployeeNumber;
@@ -132,9 +185,9 @@ public class EmployeeController implements Runnable {
     @FXML
     public void refreshEmployeeScene(ActionEvent actionEvent) {
         // Clear Employees Record
-        Employees.clearEmployees();
+        Employee.clearEmployees();
         // Add Employees
-        Employees.addAllEmployees();
+        Employee.addAllEmployees();
     }
 
     /**
@@ -221,24 +274,24 @@ public class EmployeeController implements Runnable {
                         : tf_hourlyRate.getText();
 
         // we add double quotes to the first index of string
-        return employee_number + "," + CsvUtils.addDoubleQuotesIfStringHasComma(lName) + "," +
-                CsvUtils.addDoubleQuotesIfStringHasComma(fName) + "," +
-                CsvUtils.addDoubleQuotesIfStringHasComma(birthday) + "," +
-                CsvUtils.addDoubleQuotesIfStringHasComma(address) + "," +
-                CsvUtils.addDoubleQuotesIfStringHasComma(phone) + "," +
-                CsvUtils.addDoubleQuotesIfStringHasComma(sss) + "," +
-                CsvUtils.addDoubleQuotesIfStringHasComma(philhealth) + "," +
-                CsvUtils.addDoubleQuotesIfStringHasComma(tin) + "," +
-                CsvUtils.addDoubleQuotesIfStringHasComma(pagibig) + "," +
-                CsvUtils.addDoubleQuotesIfStringHasComma(status) + "," +
-                CsvUtils.addDoubleQuotesIfStringHasComma(position) + ","  +
-                CsvUtils.addDoubleQuotesIfStringHasComma(immediateSupervisor) + "," +
-                CsvUtils.addDoubleQuotesIfStringHasComma(CsvUtils.addCommaToStrInt(basicSalary)) + "," +
-            CsvUtils.addDoubleQuotesIfStringHasComma(CsvUtils.addCommaToStrInt(riceSubsidy)) + "," +
-                CsvUtils.addDoubleQuotesIfStringHasComma(CsvUtils.addCommaToStrInt(phoneAllowance)) + "," +
-                CsvUtils.addDoubleQuotesIfStringHasComma(CsvUtils.addCommaToStrInt(clothingAllowance)) + "," +
-                CsvUtils.addDoubleQuotesIfStringHasComma(CsvUtils.addCommaAndTwoDecimalsForFloatStr(grossSemiMonthlyRate)) + "," +
-                CsvUtils.addDoubleQuotesIfStringHasComma(CsvUtils.addCommaAndTwoDecimalsForFloatStr(hourlyRate));
+        return employee_number + "," + encloseWithQuotes(lName) + "," +
+                encloseWithQuotes(fName) + "," +
+                encloseWithQuotes(birthday) + "," +
+                encloseWithQuotes(address) + "," +
+                encloseWithQuotes(phone) + "," +
+                encloseWithQuotes(sss) + "," +
+                encloseWithQuotes(philhealth) + "," +
+                encloseWithQuotes(tin) + "," +
+                encloseWithQuotes(pagibig) + "," +
+                encloseWithQuotes(status) + "," +
+                encloseWithQuotes(position) + "," +
+                encloseWithQuotes(immediateSupervisor) + "," +
+                encloseWithQuotes(formatNumberWithCommas(basicSalary)) + "," +
+                encloseWithQuotes(formatNumberWithCommas(riceSubsidy)) + "," +
+                encloseWithQuotes(formatNumberWithCommas(phoneAllowance)) + "," +
+                encloseWithQuotes(formatNumberWithCommas(clothingAllowance)) + "," +
+                encloseWithQuotes(formatFloatingNumber(grossSemiMonthlyRate)) + "," +
+                encloseWithQuotes(formatFloatingNumber(hourlyRate));
     }
 
     private String employeeDetailsTextFieldToTabularSeparatedValue() {
@@ -286,24 +339,24 @@ public class EmployeeController implements Runnable {
                         : tf_hourlyRate.getText();
 
         // we add double quotes to the first index of string
-        return employee_number + "\t" + CsvUtils.addDoubleQuotesIfStringHasComma(lName) + "\t" +
-                CsvUtils.addDoubleQuotesIfStringHasComma(fName) + "\t" +
-                CsvUtils.addDoubleQuotesIfStringHasComma(birthday) + "\t" +
-                CsvUtils.addDoubleQuotesIfStringHasComma(address) + "\t" +
-                CsvUtils.addDoubleQuotesIfStringHasComma(phone) + "\t" +
-                CsvUtils.addDoubleQuotesIfStringHasComma(sss) + "\t" +
-                CsvUtils.addDoubleQuotesIfStringHasComma(philhealth) + "\t" +
-                CsvUtils.addDoubleQuotesIfStringHasComma(tin) + "\t" +
-                CsvUtils.addDoubleQuotesIfStringHasComma(pagibig) + "\t" +
-                CsvUtils.addDoubleQuotesIfStringHasComma(status) + "\t" +
-                CsvUtils.addDoubleQuotesIfStringHasComma(position) + "\t"  +
-                CsvUtils.addDoubleQuotesIfStringHasComma(immediateSupervisor) + "\t" +
-                CsvUtils.addDoubleQuotesIfStringHasComma(CsvUtils.addCommaToStrInt(basicSalary)) + "\t" +
-                CsvUtils.addDoubleQuotesIfStringHasComma(CsvUtils.addCommaToStrInt(riceSubsidy)) + "\t" +
-                CsvUtils.addDoubleQuotesIfStringHasComma(CsvUtils.addCommaToStrInt(phoneAllowance)) + "\t" +
-                CsvUtils.addDoubleQuotesIfStringHasComma(CsvUtils.addCommaToStrInt(clothingAllowance)) + "\t" +
-                CsvUtils.addDoubleQuotesIfStringHasComma(CsvUtils.addCommaAndTwoDecimalsForFloatStr(grossSemiMonthlyRate)) + "\t" +
-                CsvUtils.addDoubleQuotesIfStringHasComma(CsvUtils.addCommaAndTwoDecimalsForFloatStr(hourlyRate));
+        return employee_number + "\t" + encloseWithQuotes(lName) + "\t" +
+                encloseWithQuotes(fName) + "\t" +
+                encloseWithQuotes(birthday) + "\t" +
+                encloseWithQuotes(address) + "\t" +
+                encloseWithQuotes(phone) + "\t" +
+                encloseWithQuotes(sss) + "\t" +
+                encloseWithQuotes(philhealth) + "\t" +
+                encloseWithQuotes(tin) + "\t" +
+                encloseWithQuotes(pagibig) + "\t" +
+                encloseWithQuotes(status) + "\t" +
+                encloseWithQuotes(position) + "\t" +
+                encloseWithQuotes(immediateSupervisor) + "\t" +
+                encloseWithQuotes(formatNumberWithCommas(basicSalary)) + "\t" +
+                encloseWithQuotes(formatNumberWithCommas(riceSubsidy)) + "\t" +
+                encloseWithQuotes(formatNumberWithCommas(phoneAllowance)) + "\t" +
+                encloseWithQuotes(formatNumberWithCommas(clothingAllowance)) + "\t" +
+                encloseWithQuotes(formatFloatingNumber(grossSemiMonthlyRate)) + "\t" +
+                encloseWithQuotes(formatFloatingNumber(hourlyRate));
     }
 
     public void resetDetailsTextField(ActionEvent actionEvent) {
@@ -394,26 +447,26 @@ public class EmployeeController implements Runnable {
 
     @Override
     public void run() {
-        ObservableList<Employees> list = FXCollections.observableArrayList(Employees.records);
+        ObservableList<Employee> list = FXCollections.observableArrayList(Employee.records);
         employeeTable.setItems(list);
-        lbl_employeeSize.setText(String.valueOf(Employees.records.size()));
+        lbl_employeeSize.setText(String.valueOf(Employee.records.size()));
 
         tableViewSelectedItemListener();
     }
 
     public void createEmployee(ActionEvent actionEvent) {
         employeeTable.setItems(
-                FXCollections.observableArrayList(Employees.records));
+                FXCollections.observableArrayList(Employee.records));
         resetDetailsTextField(actionEvent);
         isAddNewEmployee = true;
         // Refresh UI
-        int lastIndex = (Employees.records.size() - 1);
+        int lastIndex = (Employee.records.size() - 1);
         int previousEmployeeID =
-                Integer.parseInt(Employees.records.get(lastIndex).getId());
+                Integer.parseInt(Employee.records.get(lastIndex).getId());
         // newest employee id
         previousEmployeeID++;
         tf_employee_number.setText(String.valueOf(previousEmployeeID));
-        lbl_employeeSize.setText(String.valueOf(Employees.records.size()));
+        lbl_employeeSize.setText(String.valueOf(Employee.records.size()));
         tf_search.setText("");
         btn_saveOrUpdate.setText("Save Employee");
         btn_saveOrUpdate.setDisable(false);
@@ -463,8 +516,7 @@ public class EmployeeController implements Runnable {
                             // Reset attribute
                             isAddNewEmployee = false;
                             btn_saveOrUpdate.setText("Save");
-                        }
-                        else {
+                        } else {
                             System.out.println("Im at else statement line 473");
                             if (checkFieldsThatContainsNumbers()) {
                                 System.out.println("CheckFieldsThatContainsNumbers has been accessed at line 475");
@@ -504,7 +556,7 @@ public class EmployeeController implements Runnable {
     }
 
     public void onLogoutClicked(ActionEvent actionEvent) {
-        Employees.records.clear();
+        Employee.records.clear();
         try {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Logging out.");
             PauseTransition delay = new PauseTransition(Duration.seconds(3));
@@ -547,7 +599,7 @@ public class EmployeeController implements Runnable {
         employeeTable.getItems().clear();
 
         // Filter data based on search text
-        for (Employees item : Employees.records) {
+        for (Employee item : Employee.records) {
             if (item.toString().toLowerCase().contains(searchText.toLowerCase())) {
                 employeeTable.getItems().add(item);
                 employeeCounter++;
@@ -619,7 +671,7 @@ public class EmployeeController implements Runnable {
             dp_birthday.requestFocus();
             return false;
         }
-        TextField [] textField = {
+        TextField[] textField = {
                 tf_employee_number,
                 tf_fName,
                 tf_lName,
@@ -634,7 +686,7 @@ public class EmployeeController implements Runnable {
                 tf_immediateSupervisor,
         };
 
-        String [] str_textField_name = {
+        String[] str_textField_name = {
                 "Employee number",
                 "First name",
                 "Last name",
@@ -649,7 +701,7 @@ public class EmployeeController implements Runnable {
                 "Immediate Supervisor"
         };
 
-        for (int i =  0; i < textField.length; i++) {
+        for (int i = 0; i < textField.length; i++) {
             if (textField[i].getText().isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Blank textfield");
@@ -686,12 +738,12 @@ public class EmployeeController implements Runnable {
             textFields[9].setText(tf_pagibig.getText());
             textFields[10].setText(tf_status.getText());
             textFields[11].setText(tf_immediateSupervisor.getText());
-            textFields[12].setText(CsvUtils.addCommaToStrInt(tf_basicSalary.getText()));
-            textFields[13].setText(CsvUtils.addCommaToStrInt(tf_riceSubsidy.getText()));
-            textFields[14].setText(CsvUtils.addCommaToStrInt(tf_phoneAllowance.getText()));
-            textFields[15].setText(CsvUtils.addCommaToStrInt(tf_clothingAllowance.getText()));
-            textFields[16].setText(CsvUtils.addCommaToStrInt(tf_grossSemiMonthlyRate.getText()));
-            textFields[17].setText(CsvUtils.addCommaAndTwoDecimalsForFloatStr(tf_hourlyRate.getText()));
+            textFields[12].setText(formatNumberWithCommas(tf_basicSalary.getText()));
+            textFields[13].setText(formatNumberWithCommas(tf_riceSubsidy.getText()));
+            textFields[14].setText(formatNumberWithCommas(tf_phoneAllowance.getText()));
+            textFields[15].setText(formatNumberWithCommas(tf_clothingAllowance.getText()));
+            textFields[16].setText(formatNumberWithCommas(tf_grossSemiMonthlyRate.getText()));
+            textFields[17].setText(formatFloatingNumber(tf_hourlyRate.getText()));
 
             // Create a GridPane to hold the TextFields
             GridPane gridPane = new GridPane();
@@ -734,8 +786,7 @@ public class EmployeeController implements Runnable {
 
             // Show the alert
             alert.showAndWait();
-        }
-        catch (NullPointerException nullPointerException) {
+        } catch (NullPointerException nullPointerException) {
             Alert alertcatch = new Alert(Alert.AlertType.ERROR, "Please select item on tableview.");
             alertcatch.showAndWait();
         }

@@ -1,5 +1,9 @@
 package com.payrollsystem.jomariabejo;
 
+import com.payrollsystem.jomariabejo.model.Attendance;
+import com.payrollsystem.jomariabejo.model.Deduction;
+import com.payrollsystem.jomariabejo.model.Employee;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -36,8 +40,8 @@ public class Salary {
     }
 
     public Salary(int eid, int month, int year) throws ParseException {
-        if (Employees.records.isEmpty())
-            Employees.addAllEmployees();
+        if (Employee.records.isEmpty())
+            Employee.addAllEmployees();
         if (Attendance.records.isEmpty())
             Attendance.addAllAttendanceRecord();
 
@@ -46,7 +50,7 @@ public class Salary {
         this.year = year;
         calculateWeeklySalary();
         Deduction deduction =
-                new Deduction(Employees.records.get(eid - 10001).getBasic_salary(),
+                new Deduction(Employee.records.get(eid - 10001).getBasic_salary(),
                         getMonthly_gross_salary());
         double increased_precision_net_salary = getMonthly_gross_salary()
                 - deduction.getWithholdingTax() - deduction.TotalContribution();
@@ -64,7 +68,7 @@ public class Salary {
          *  [4] week 5 gross salary
          *  [5] week 6 gross salary
          */
-        double hourly_rate = Employees.records.get(eid - 10_001).getHourly_rate();
+        double hourly_rate = Employee.records.get(eid - 10_001).getHourly_rate();
         weekly_gross_salary[0] = weekly_hours_worked[0] * hourly_rate;
         weekly_gross_salary[1] = weekly_hours_worked[1] * hourly_rate;
         weekly_gross_salary[2] = weekly_hours_worked[2] * hourly_rate;
@@ -107,8 +111,8 @@ public class Salary {
 
                 if (Integer.parseInt(arrDateAttendance[0]) == (num_month)
                         && year == final_week_year) {
-                    String startTimeString = Attendance.records.get(i).getTimeIn();
-                    String endTimeString = Attendance.records.get(i).getTimeOut();
+                    String startTimeString = Attendance.records.get(i).getTime_in();
+                    String endTimeString = Attendance.records.get(i).getTime_out();
 
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("H:mm");
 
