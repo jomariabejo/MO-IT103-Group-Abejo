@@ -1,4 +1,4 @@
-package com.payrollsystem.jomariabejo;
+package com.payrollsystem.jomariabejo.model;
 
 import com.payrollsystem.jomariabejo.model.Attendance;
 import com.payrollsystem.jomariabejo.model.Deduction;

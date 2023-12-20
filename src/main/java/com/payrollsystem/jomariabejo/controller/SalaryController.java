@@ -10,7 +10,7 @@ import java.util.Date;
 import com.payrollsystem.jomariabejo.model.Attendance;
 import com.payrollsystem.jomariabejo.model.Deduction;
 import com.payrollsystem.jomariabejo.model.Employee;
-import com.payrollsystem.jomariabejo.Salary;
+import com.payrollsystem.jomariabejo.model.Salary;
 import com.payrollsystem.jomariabejo.utils.CsvUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
