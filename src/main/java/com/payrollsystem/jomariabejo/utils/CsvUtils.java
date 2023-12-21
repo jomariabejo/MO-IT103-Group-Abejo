@@ -6,108 +6,43 @@ import com.payrollsystem.jomariabejo.data.CSVFileNames;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class CsvUtils {
+public class CsvUtils implements iBooleanUtils {
 
-    public static void addAllEmployee() {
-        BufferedReader br;
-        try {
-            br = new BufferedReader(new FileReader(CSVFileNames.EMPLOYEE_DETAILS_CSV));
-            String line;
-            boolean is_header = true;
-            while ((line = br.readLine()) != null) {
-                if (is_header) {
-                    is_header = false;
-                    continue;
-                }
-                String[] splitted_data = line.split(",");
-                ArrayList processedColumn = new ArrayList();
-                String concatStr = "";
-                for (int i = 0; i < splitted_data.length; i++) {
-                    int lastIndex = splitted_data[i].length() - 1;
-                    if (splitted_data[i].charAt(0) == '\"') {
-                        if (!concatStr.isEmpty()) {
-                            if (concatStr.contains("  ")) {
-                                String convertTwoWhiteSpaceIntoComma = concatStr.replace("  ", ", ");
-                                concatStr = convertTwoWhiteSpaceIntoComma;
-                                String recipe_str = concatStr;
-                                String cooked_str = concatStr.trim();
-                                int leadingSpaces = recipe_str.length() - cooked_str.length();
-                                String finalString = recipe_str.substring(leadingSpaces);
-                                processedColumn.add(finalString);
-                                concatStr = splitted_data[i];
-                            }
-                        } else {
-                            concatStr += (" " + splitted_data[i]);
-                        }
-                    } else if (splitted_data[i].charAt(0) == ' ') {
-                        concatStr += (" " + splitted_data[i]);
-                    } else if (splitted_data[i].charAt(lastIndex) == '\"') {
-                        concatStr += (" " + splitted_data[i].trim());
-                        if (concatStr.charAt(concatStr.length() - 1) == '\"') {
-                            String removeWhiteSpace = concatStr.replace(" ", "");
-                            processedColumn.add(removeWhiteSpace);
-                            concatStr = "";
-                        }
+    public void addAllEmployee() throws IOException {
+
+        BufferedReader reader = new BufferedReader(new FileReader(CSVFileNames.EMPLOYEE_DETAILS_CSV));
+
+        reader.readLine(); // This will read the first line and skip it.
+
+        String line;
+
+        while ((line = reader.readLine()) != null) {
+
+            ArrayList<String> employeeProcessedData = new ArrayList();
+
+            // Split the line into an array using comma as delimiter
+            String[] rowData = line.split(",");
+
+            // Declare a boolean as flag that our concatenator is open
+            boolean concatOpen = false;
+
+            for (int currentColumn = 0; currentColumn < rowData.length; currentColumn++) {
+
+                if (concatOpen) {
+
+                } else {
+                    String string = rowData[currentColumn];
+                    if (isFirstCharQuoteOrWhiteSpace(string)) {
+                        concatOpen = true;
                     } else {
-                        if (splitted_data[i].charAt(0) == '\"' && splitted_data[i].charAt(lastIndex) == '\"') {
-                            String convertTwoWhiteSpaceIntoCommaWithWhitespace = concatStr.replace("  ", ", ");
-                            processedColumn.add(convertTwoWhiteSpaceIntoCommaWithWhitespace);
-                            concatStr = "";
-                        } else if (!concatStr.isEmpty()) {
-                            lastIndex = concatStr.length() - 1;
-                            if (concatStr.charAt(0) == '\"' && (concatStr.charAt(lastIndex) == '\"')) {
-                                String convertTwoWhiteSpaceIntoCommaWithWhiteSpace = concatStr.replace("  ", ", ");
-                                processedColumn.add(convertTwoWhiteSpaceIntoCommaWithWhiteSpace.replace("\"\"", ""));
-                                concatStr = "";
-                                i--; // helloworld
-                            } else if (concatStr.charAt(0) == '\"' && (concatStr.charAt(lastIndex) == ' ')) {
-                                String convertTwoWhiteSpaceIntoComma = concatStr.replace("  ", ", ");
-                                processedColumn.add(convertTwoWhiteSpaceIntoComma.replace("\"\"", ""));
-                                concatStr = "";
-                            }
-                        } else {
-                            concatStr = splitted_data[i];
-                            processedColumn.add(concatStr);
-                            concatStr = "";
-                        }
+                        concatOpen = false;
                     }
                 }
-
-                // remove double quotes
-                String BasicSalary = (String.valueOf(processedColumn.get(13)).replaceAll("\"", ""));
-                String RiceSubsidy = (String.valueOf(processedColumn.get(14)).replaceAll("\"", ""));
-                String PhoneAllowance = (String.valueOf(processedColumn.get(15)).replaceAll("\"", ""));
-                String ClothingAllowance = (String.valueOf(processedColumn.get(16)).replaceAll("\"", ""));
-                String GrossSemimonthlyRate = (String.valueOf(processedColumn.get(17)).replaceAll("\"", ""));
-                String HourlyRate = (String.valueOf(processedColumn.get(18)).replaceAll("\"", ""));
-
-                Employee employee = new Employee(
-                        String.valueOf(processedColumn.get(0)).replaceAll("\"", ""),
-                        String.valueOf(processedColumn.get(1)).replaceAll("\"", ""),
-                        String.valueOf(processedColumn.get(2)).replaceAll("\"", ""),
-                        String.valueOf(processedColumn.get(3)).replaceAll("\"", ""),
-                        String.valueOf(processedColumn.get(4)).replaceAll("\"", ""),
-                        String.valueOf(processedColumn.get(5)).replaceAll("\"", ""),
-                        String.valueOf(processedColumn.get(6)).replaceAll("\"", ""),
-                        String.valueOf(processedColumn.get(7)).replaceAll("\"", ""),
-                        String.valueOf(processedColumn.get(8)).replaceAll("\"", ""),
-                        String.valueOf(processedColumn.get(9)).replaceAll("\"", ""),
-                        String.valueOf(processedColumn.get(10)).replaceAll("\"", ""),
-                        String.valueOf(processedColumn.get(11)).replaceAll("\"", ""),
-                        String.valueOf(processedColumn.get(12)).replaceAll("\"", ""),
-                        Integer.parseInt((BasicSalary).replace(",", "")), // remove comma
-                        Integer.parseInt((RiceSubsidy).replace(",", "")), // remove comma
-                        Integer.parseInt((PhoneAllowance).replace(",", "")), // remove comma
-                        Integer.parseInt((ClothingAllowance).replace(",", "")), // remove comma
-                        Integer.parseInt((GrossSemimonthlyRate).replace(",", "")), // remove comma
-                        Float.parseFloat((HourlyRate).replace(",", ""))); // remove comma
-                Employee.records.add(employee);
             }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
         }
     }
 
