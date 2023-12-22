@@ -7,7 +7,7 @@ public interface iBooleanUtils {
      * @param inputString The String to be tested
      * @return True if it begins double quote, false otherwise.
      */
-    default boolean isFirstCharDoubleQuote(String inputString) {
+    static boolean isFirstCharDoubleQuote(String inputString) {
         return  inputString.startsWith("\"");
     }
 
@@ -16,7 +16,7 @@ public interface iBooleanUtils {
      * @param inputString The string to be tested
      * @return True if it begins whitespace, false otherwise;
      */
-    default boolean isFirstCharWhitespace(String inputString) {
+    static boolean isFirstCharWhitespace(String inputString) {
         return inputString.startsWith(" ");
     }
 }
