@@ -6,13 +6,12 @@ import com.payrollsystem.jomariabejo.data.CSVFileNames;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class CsvUtils implements iBooleanUtils {
+public class CsvUtils {
 
-    public void addAllEmployee() throws IOException {
+    public static void addAllEmployee() throws IOException {
 
         BufferedReader reader = new BufferedReader(new FileReader(CSVFileNames.EMPLOYEE_DETAILS_CSV));
 
@@ -29,22 +28,64 @@ public class CsvUtils implements iBooleanUtils {
 
             // Declare a boolean as flag that our concatenator is open
             boolean concatOpen = false;
+            /**
+             * Declare a string builder for modifying string content.
+             * Think of it like a dark room and we have a small bag(string) and large bag(string builder).
+             * Then we start to get things, we put small things(unmodified string) to small bag,
+             * meanwhile we put large things inside the larger bag(modified string).
+             *
+             * We use flag(concatOpen)to determine whether the string needs to be modified.
+             * We continue to modify large things(modified string) until we're satisfied.
+             */
+            StringBuilder stringBuilder = new StringBuilder();
 
             for (int currentColumn = 0; currentColumn < rowData.length; currentColumn++) {
-
+                String string = rowData[currentColumn];
                 if (concatOpen) {
+                    /**
+                     * Verify whether the string has double quotes (") at the end of it.
+                     * if it does, we will turn off the concatOpen
+                     */
+                    if (iBooleanUtils.isTrailingCharDoubleQuote(string)) {
+                        concatOpen = false;
 
+                        /**
+                         * ⚠️ Since the comma serves as our delimiter to cut the row line into multiple strings,
+                         * we'll include it once more to validate our birthday string.
+                         *
+                         *
+                         * ✅ Check if the string contains a month.
+                         * if it does, we will add a comma, otherwise, the string won't be changed.
+                         */
+
+                        boolean strHasMonth = MonthChecker.isStringContainsMonth(stringBuilder.toString());
+
+                        if (strHasMonth) {
+                            String year = string;
+                            stringBuilder.append(", " + year);
+                        } else {
+                            stringBuilder.append(string);
+                        }
+
+                        employeeProcessedData.add(stringBuilder.toString());
+                        // Reset the StringBuilder for reuse.
+                        stringBuilder.setLength(0);
+                    } else {
+                        stringBuilder.append(string);
+                    }
                 } else {
-                    String string = rowData[currentColumn];
-                    if (isFirstCharQuoteOrWhiteSpace(string)) {
+                    if (iBooleanUtils.isFirstCharDoubleQuote(string) || iBooleanUtils.isFirstCharWhitespace(string)) {
+                        stringBuilder.append(string);
                         concatOpen = true;
                     } else {
-                        concatOpen = false;
+                        employeeProcessedData.add(string);
                     }
                 }
             }
+            employeeProcessedData.stream().forEach(System.out::println);
         }
     }
+
 
     public static void addAllAttendanceRecord() {
         try {

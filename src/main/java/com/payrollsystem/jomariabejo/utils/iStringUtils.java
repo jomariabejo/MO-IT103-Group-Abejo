@@ -52,4 +52,12 @@ public interface iStringUtils {
         return decimalFormat.format(parsedNum);
     }
 
+    static String formatDoubleSpace(String inputString) {
+        return inputString.replace(",  ", ", ");
+    }
+
+    static String clearQuotes(String inputString) {
+        return inputString.replaceAll("\"","");
+    }
+
 }
