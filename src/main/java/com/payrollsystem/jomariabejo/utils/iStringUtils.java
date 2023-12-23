@@ -56,7 +56,7 @@ public interface iStringUtils {
         return inputString.replace(",  ", ", ");
     }
 
-    static String clearQuotes(String inputString) {
+    static String removeQuotes(String inputString) {
         return inputString.replaceAll("\"","");
     }
 

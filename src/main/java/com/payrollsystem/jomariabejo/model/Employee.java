@@ -2,6 +2,7 @@ package com.payrollsystem.jomariabejo.model;
 
 import com.payrollsystem.jomariabejo.utils.CsvUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Employee {
@@ -134,7 +135,7 @@ public class Employee {
         records.clear();
     }
 
-    public static void addAllEmployees() {
+    public static void addAllEmployees() throws IOException {
         CsvUtils.addAllEmployee();
     }
 
@@ -155,9 +156,9 @@ public class Employee {
     }
 
     public static int[] employeeNumbers() {
-        int [] arr_employee_numbers = new int[records.size()];
-        for (int c = 0; c < arr_employee_numbers.length; c++)
-            arr_employee_numbers[c] = Integer.valueOf(records.get(c).getId());
-        return arr_employee_numbers;
+        int[] employeeNumbers = new int[Employee.records.size()];
+        for (int i = 0; i < employeeNumbers.length; i++)
+            employeeNumbers[i] = Integer.valueOf(records.get(i).getId());
+        return employeeNumbers;
     }
 }

@@ -39,8 +39,9 @@ public class CsvUtils {
              */
             StringBuilder stringBuilder = new StringBuilder();
 
-            for (int currentColumn = 0; currentColumn < rowData.length; currentColumn++) {
-                String string = rowData[currentColumn];
+            for (int i = 0; i < rowData.length; i++) {
+                String string = rowData[i];
+
                 if (concatOpen) {
                     /**
                      * Verify whether the string has double quotes (") at the end of it.
@@ -58,14 +59,7 @@ public class CsvUtils {
                          * if it does, we will add a comma, otherwise, the string won't be changed.
                          */
 
-                        boolean strHasMonth = MonthChecker.isStringContainsMonth(stringBuilder.toString());
-
-                        if (strHasMonth) {
-                            String year = string;
-                            stringBuilder.append(", " + year);
-                        } else {
-                            stringBuilder.append(string);
-                        }
+                        stringBuilder.append(string);
 
                         employeeProcessedData.add(stringBuilder.toString());
                         // Reset the StringBuilder for reuse.
@@ -75,14 +69,43 @@ public class CsvUtils {
                     }
                 } else {
                     if (iBooleanUtils.isFirstCharDoubleQuote(string) || iBooleanUtils.isFirstCharWhitespace(string)) {
-                        stringBuilder.append(string);
+                        stringBuilder.append(string + ",");
                         concatOpen = true;
                     } else {
                         employeeProcessedData.add(string);
                     }
                 }
             }
-            employeeProcessedData.stream().forEach(System.out::println);
+
+            /**
+             * Adds a new employee to the records using processed data.
+             * The Employee object is instantiated with specific data fields extracted from 'employeeProcessedData'.
+             * Ensure correct data types are used and any necessary conversions are applied.
+             */
+
+            Employee.records.add(
+                    new Employee(
+                            employeeProcessedData.get(0),    // Employee number
+                            employeeProcessedData.get(1),    // Last name
+                            employeeProcessedData.get(2),    // First name
+                            employeeProcessedData.get(3),    // Birthday
+                            employeeProcessedData.get(4),    // Address
+                            employeeProcessedData.get(5),    // Phone Number
+                            employeeProcessedData.get(6),    // SSS #
+                            employeeProcessedData.get(7),    // Philhealth #
+                            employeeProcessedData.get(8),    // TIN #
+                            employeeProcessedData.get(9),    // Pagibig #
+                            employeeProcessedData.get(10),   // Status
+                            employeeProcessedData.get(11),   // Position
+                            employeeProcessedData.get(12),   // Immdediate Supervisor
+                            IntegerUtil.fixInteger(employeeProcessedData.get(13)),     // Basic Salary
+                            IntegerUtil.fixInteger(employeeProcessedData.get(14)),     // Rice Subsidy
+                            IntegerUtil.fixInteger(employeeProcessedData.get(15)),     // Phone Allowance
+                            IntegerUtil.fixInteger(employeeProcessedData.get(16)),     // Clothing Allowance
+                            IntegerUtil.fixInteger(employeeProcessedData.get(17)),     // Gross Semi-monthly rate
+                            Float.parseFloat(employeeProcessedData.get(18))            // Hourly Rate
+                    )
+            );
         }
     }
 
