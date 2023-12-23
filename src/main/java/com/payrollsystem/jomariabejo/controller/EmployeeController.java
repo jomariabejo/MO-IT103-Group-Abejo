@@ -183,7 +183,7 @@ public class EmployeeController implements Runnable, iStringUtils {
     }
 
     @FXML
-    public void refreshEmployeeScene(ActionEvent actionEvent) {
+    public void refreshEmployeeScene(ActionEvent actionEvent) throws IOException {
         // Clear Employees Record
         Employee.clearEmployees();
         // Add Employees
@@ -569,7 +569,7 @@ public class EmployeeController implements Runnable, iStringUtils {
         }
     }
 
-    public void onDeleteEmployeeClicked(ActionEvent actionEvent) {
+    public void onDeleteEmployeeClicked(ActionEvent actionEvent) throws IOException {
         System.out.println("Start deleting employee here...");
         CsvUtils.deleteEmployeeRecordByLineNumber(CSVFileNames.EMPLOYEE_DETAILS_CSV,
                 CsvUtils.findLineNumberByEmployeeNumber(

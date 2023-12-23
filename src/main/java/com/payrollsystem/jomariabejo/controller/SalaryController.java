@@ -206,7 +206,7 @@ public class SalaryController implements Runnable {
         return searched_month;
     }
 
-    public void search_employee(ActionEvent actionEvent) throws ParseException {
+    public void search_employee(ActionEvent actionEvent) throws ParseException, IOException {
 
         int employee_number = Integer.parseInt(txtField_eid.getText());
         int search_year = Integer.parseInt(txtField_select_YY.getText());
@@ -336,7 +336,7 @@ public class SalaryController implements Runnable {
         }
     }
 
-    public void onGenerateClicked(ActionEvent actionEvent) {
+    public void onGenerateClicked(ActionEvent actionEvent) throws IOException {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         try {
             //  check if textfields employee_number and year only contains numbers.

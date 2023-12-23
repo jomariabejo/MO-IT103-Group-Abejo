@@ -88,8 +88,8 @@ public class CsvUtils {
                             employeeProcessedData.get(0),    // Employee number
                             employeeProcessedData.get(1),    // Last name
                             employeeProcessedData.get(2),    // First name
-                            employeeProcessedData.get(3),    // Birthday
-                            employeeProcessedData.get(4),    // Address
+                            employeeProcessedData.get(3).replaceAll("^\"|\"$", ""),    // Remove double quotes just from the beginning and end of the Birthday
+                            employeeProcessedData.get(4).replaceAll("^\"|\"$", ""),    // Remove double quotes just from the beginning and end of the Address
                             employeeProcessedData.get(5),    // Phone Number
                             employeeProcessedData.get(6),    // SSS #
                             employeeProcessedData.get(7),    // Philhealth #

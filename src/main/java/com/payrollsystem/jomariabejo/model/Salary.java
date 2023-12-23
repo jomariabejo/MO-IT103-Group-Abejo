@@ -4,6 +4,7 @@ import com.payrollsystem.jomariabejo.model.Attendance;
 import com.payrollsystem.jomariabejo.model.Deduction;
 import com.payrollsystem.jomariabejo.model.Employee;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -39,7 +40,7 @@ public class Salary {
         return weekly_hours_worked[week];
     }
 
-    public Salary(int eid, int month, int year) throws ParseException {
+    public Salary(int eid, int month, int year) throws ParseException, IOException {
         if (Employee.records.isEmpty())
             Employee.addAllEmployees();
         if (Attendance.records.isEmpty())

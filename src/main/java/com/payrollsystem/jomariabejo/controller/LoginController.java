@@ -39,7 +39,7 @@ public class LoginController {
             throw new RuntimeException(e);
         }
     }
-    public void loginAction(ActionEvent event) {
+    public void loginAction(ActionEvent event) throws IOException {
         if (verifyUser(
                 txtField_employeeNumber.getText(), pwField_password.getText())) {
             Alert alert =
