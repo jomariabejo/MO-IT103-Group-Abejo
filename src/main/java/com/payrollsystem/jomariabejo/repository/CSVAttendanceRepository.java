@@ -80,7 +80,7 @@ public class CSVAttendanceRepository implements AttendanceRepository {
              */
             while ((line = br.readLine()) != null) {
                 String[] attendanceInfo = line.split(",");
-                if (hasMatchingAttendance(attendance, attendanceInfo)) {
+                if (matchAttendanceRecords(attendance, attendanceInfo)) {
                     return attendance;
                 }
             }
@@ -132,7 +132,7 @@ public class CSVAttendanceRepository implements AttendanceRepository {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] attendanceArray = line.split(",");
-                if (hasMatchingAttendance(attendance, attendanceArray)) {
+                if (matchAttendanceRecords(attendance, attendanceArray)) {
                     return true;
                 }
             }
@@ -149,7 +149,7 @@ public class CSVAttendanceRepository implements AttendanceRepository {
      * @param arrAttendance An array of Strings representing attendance data.
      * @return True if the Attendance object matches the array; otherwise, false.
      */
-    public boolean hasMatchingAttendance(Attendance attendance, String[] arrAttendance) {
+    public boolean matchAttendanceRecords(Attendance attendance, String[] arrAttendance) {
         String employeeNumber = String.valueOf(attendance.getEmployee_number());
         String firstName = attendance.getFirst_name();
         String lastName = attendance.getLast_name();
@@ -176,7 +176,7 @@ public class CSVAttendanceRepository implements AttendanceRepository {
             while ((line = reader.readLine()) != null) {
                 if (currentLine == rowLine) {
                     // Update the specific row with new attendance data
-                    output.append(newAttendance).append("\n");
+                    output.append(newAttendance.toCommaSeparatedValue()).append("\n");
                 } else {
                     output.append(line).append("\n");
                 }

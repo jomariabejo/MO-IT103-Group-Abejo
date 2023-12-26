@@ -55,6 +55,10 @@ public class Attendance {
                 + ", timeOut=" + time_out + '}';
     }
 
+    public String toCommaSeparatedValue() {
+        return getEmployee_number() + "," + getLast_name() + "," + getFirst_name() + "," + getDate() + "," + getTime_in() + "," + getTime_out();
+    }
+
     public static void addAllAttendanceRecord() {
         CsvUtils.addAllAttendanceRecord();
     }
