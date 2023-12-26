@@ -7,6 +7,8 @@ import java.util.ArrayList;
 public interface AttendanceRepository {
     void createAttendance(Attendance attendance);
 
+    void createMultipleAttendance(ArrayList<Attendance> attendances);
+
     String[] readAttendance(String[] attendanceDetails);
 
     Attendance readAttendance(Attendance attendance);

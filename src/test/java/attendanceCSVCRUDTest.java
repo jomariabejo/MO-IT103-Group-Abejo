@@ -2,6 +2,8 @@ import com.payrollsystem.jomariabejo.model.Attendance;
 import com.payrollsystem.jomariabejo.repository.CSVAttendanceRepository;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -89,5 +91,39 @@ public class attendanceCSVCRUDTest {
 
         // Verify if it was removed. The 'isAttendanceExist' should return false
         assertFalse(new CSVAttendanceRepository().isAttendanceExist(removedAttendance));
+    }
+
+    /**
+     * Delete multiple attendances from a CSV file using row numbers.
+     */
+    @Test
+    public void deleteMultipleAttendanceRowLineCSVTest() {
+        ArrayList<Integer> rowNumber = new ArrayList<>();
+        rowNumber.add(2);
+        rowNumber.add(3);
+        rowNumber.add(4);
+        rowNumber.add(5);
+        new CSVAttendanceRepository().deleteMultipleAttendance(rowNumber);
+    }
+
+    /**
+     * Ten new attendances should be created in a CSV file.
+     */
+    @Test
+    public void addNewMultipleAttendancesCSVTest() {
+        ArrayList<Attendance> list = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            Attendance attendance = new Attendance(
+                    10001,
+                    "Crisostomo",
+                    "Jose",
+                    "1/9/2022",
+                    "8:00",
+                    "17:00"
+            );
+            list.add(attendance);
+        }
+        // Add all attendances to CSV
+        new CSVAttendanceRepository().createMultipleAttendance(list);
     }
 }

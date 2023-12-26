@@ -22,9 +22,26 @@ public class CSVAttendanceRepository implements AttendanceRepository {
     @Override
     public void createAttendance(Attendance attendance) {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(CSVFileNames.ATTENDANCE_CSV, true));
-            bw.write(attendance.toCommaSeparatedValueString());
-            bw.close();
+            BufferedWriter writer = new BufferedWriter(new FileWriter(CSVFileNames.ATTENDANCE_CSV, true));
+            writer.write(attendance.toCommaSeparatedValue());
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void createMultipleAttendance(ArrayList<Attendance> attendances) {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(CSVFileNames.ATTENDANCE_CSV, true));
+
+            for (int i = 0; i < attendances.size(); i++) {
+                Attendance attendance = attendances.get(i);
+                writer.write(attendance.toCommaSeparatedValue());
+                writer.newLine();
+            }
+
+            writer.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -39,8 +56,8 @@ public class CSVAttendanceRepository implements AttendanceRepository {
     @Override
     public String[] readAttendance(String[] attendanceDetails) {
         try {
-            BufferedReader br = new BufferedReader(new FileReader(CSVFileNames.ATTENDANCE_CSV));
-            br.readLine(); // This will read the first line and skip it.
+            BufferedReader reader = new BufferedReader(new FileReader(CSVFileNames.ATTENDANCE_CSV));
+            reader.readLine(); // This will read the first line and skip it.
 
             String line;
             int currentLine = 1;
@@ -48,7 +65,7 @@ public class CSVAttendanceRepository implements AttendanceRepository {
              *  Scan through each row of the CSV file to see if the attendance is present.
              *  Returns the attendance if found in the row of csv; otherwise, returns null.
              */
-            while ((line = br.readLine()) != null) {
+            while ((line = reader.readLine()) != null) {
                 String[] lineInfo = line.split(",");
 
                 if (Arrays.equals(attendanceDetails, lineInfo)) {
@@ -70,15 +87,15 @@ public class CSVAttendanceRepository implements AttendanceRepository {
     @Override
     public Attendance readAttendance(Attendance attendance) {
         try {
-            BufferedReader br = new BufferedReader(new FileReader(CSVFileNames.ATTENDANCE_CSV));
-            br.readLine(); // This will read the first line and skip it.
+            BufferedReader reader = new BufferedReader(new FileReader(CSVFileNames.ATTENDANCE_CSV));
+            reader.readLine(); // This will read the first line and skip it.
 
             String line;
             /**
              *  Scan through each row of the CSV file to see if the attendance is present.
              *  Returns the attendance if found in the row of csv; otherwise, returns null.
              */
-            while ((line = br.readLine()) != null) {
+            while ((line = reader.readLine()) != null) {
                 String[] attendanceInfo = line.split(",");
                 if (matchAttendanceRecords(attendance, attendanceInfo)) {
                     return attendance;
@@ -100,11 +117,11 @@ public class CSVAttendanceRepository implements AttendanceRepository {
     @Override
     public boolean isAttendanceExist(String[] arrAttendance) {
         try {
-            BufferedReader br = new BufferedReader(new FileReader(CSVFileNames.ATTENDANCE_CSV));
-            br.readLine(); // This will read the first line and skip it.
+            BufferedReader reader = new BufferedReader(new FileReader(CSVFileNames.ATTENDANCE_CSV));
+            reader.readLine(); // This will read the first line and skip it.
 
             String line;
-            while ((line = br.readLine()) != null) {
+            while ((line = reader.readLine()) != null) {
                 String[] attendanceArray = line.split(",");
                 if (Arrays.equals(attendanceArray, arrAttendance)) {
                     return true; // Attendance exist
@@ -126,11 +143,11 @@ public class CSVAttendanceRepository implements AttendanceRepository {
     @Override
     public boolean isAttendanceExist(Attendance attendance) {
         try {
-            BufferedReader br = new BufferedReader(new FileReader(CSVFileNames.ATTENDANCE_CSV));
-            br.readLine(); // This will read the first line and skip it.
+            BufferedReader reader = new BufferedReader(new FileReader(CSVFileNames.ATTENDANCE_CSV));
+            reader.readLine(); // This will read the first line and skip it.
 
             String line;
-            while ((line = br.readLine()) != null) {
+            while ((line = reader.readLine()) != null) {
                 String[] attendanceArray = line.split(",");
                 if (matchAttendanceRecords(attendance, attendanceArray)) {
                     return true;
@@ -145,7 +162,7 @@ public class CSVAttendanceRepository implements AttendanceRepository {
     /**
      * Checks if the provided Attendance object matches the given array of attendance Strings.
      *
-     * @param attendance   The Attendance object to compare.
+     * @param attendance    The Attendance object to compare.
      * @param arrAttendance An array of Strings representing attendance data.
      * @return True if the Attendance object matches the array; otherwise, false.
      */
@@ -241,14 +258,17 @@ public class CSVAttendanceRepository implements AttendanceRepository {
             String line;
             int currentLine = 0;
             while ((line = reader.readLine()) != null) {
+                boolean isRowToDeleteFound = false; // Indicates whether the row to be deleted has been found.
                 currentLine++;
                 for (int i = 0; i < rowsToDelete.size(); i++) {
-                    /**
-                     * Ang gusto kong mangyari is
-                     */
                     if (rowsToDelete.get(i) == currentLine) {
                         rowsToDelete.remove(i);
+                        isRowToDeleteFound = true;
+                        break;
                     }
+                }
+                if (!isRowToDeleteFound) {
+                    lines.add(line);
                 }
             }
         } catch (IOException e) {

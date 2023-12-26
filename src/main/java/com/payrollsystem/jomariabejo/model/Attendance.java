@@ -71,17 +71,4 @@ public class Attendance {
         return first_name + " " + last_name;
     }
 
-    public String toCommaSeparatedValueString () {
-        return (String.valueOf(employee_number)
-                + ","
-                + last_name
-                + ","
-                + first_name
-                + ","
-                + date
-                + ","
-                + time_in
-                + ","
-                + time_out);
-    }
 }
