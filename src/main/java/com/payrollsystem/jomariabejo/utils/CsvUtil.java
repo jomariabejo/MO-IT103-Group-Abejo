@@ -3,13 +3,14 @@ package com.payrollsystem.jomariabejo.utils;
 import com.payrollsystem.jomariabejo.model.Attendance;
 import com.payrollsystem.jomariabejo.model.Employee;
 import com.payrollsystem.jomariabejo.data.CSVFileNames;
+import com.payrollsystem.jomariabejo.model.Leave;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CsvUtils {
+public class CsvUtil {
 
     public static void addAllEmployee() throws IOException {
 
@@ -26,12 +27,12 @@ public class CsvUtils {
             // Split the line into an array using comma as delimiter
             String[] rowData = line.split(",");
 
-            // Declare a boolean as flag that our concatenator is open
+            // Declare a boolean as flag that our concatenator is close
             boolean concatOpen = false;
             /**
              * Declare a string builder for modifying string content.
              * Think of it like a dark room and we have a small bag(string) and large bag(string builder).
-             * Then we start to get things, we put small things(unmodified string) to small bag,
+             * Then we start to get things, we put small things(string) to small bag,
              * meanwhile we put large things inside the larger bag(modified string).
              *
              * We use flag(concatOpen)to determine whether the string needs to be modified.
@@ -45,19 +46,10 @@ public class CsvUtils {
                 if (concatOpen) {
                     /**
                      * Verify whether the string has double quotes (") at the end of it.
-                     * if it does, we will turn off the concatOpen
+                     * If it does, close concatOpen and append the string.
                      */
                     if (iBooleanUtils.isTrailingCharDoubleQuote(string)) {
                         concatOpen = false;
-
-                        /**
-                         * ⚠️ Since the comma serves as our delimiter to cut the row line into multiple strings,
-                         * we'll include it once more to validate our birthday string.
-                         *
-                         *
-                         * ✅ Check if the string contains a month.
-                         * if it does, we will add a comma, otherwise, the string won't be changed.
-                         */
 
                         stringBuilder.append(string);
 
@@ -97,7 +89,7 @@ public class CsvUtils {
                             employeeProcessedData.get(9),    // Pagibig #
                             employeeProcessedData.get(10),   // Status
                             employeeProcessedData.get(11),   // Position
-                            employeeProcessedData.get(12),   // Immdediate Supervisor
+                            employeeProcessedData.get(12),   // Immediate Supervisor
                             IntegerUtil.fixInteger(employeeProcessedData.get(13)),     // Basic Salary
                             IntegerUtil.fixInteger(employeeProcessedData.get(14)),     // Rice Subsidy
                             IntegerUtil.fixInteger(employeeProcessedData.get(15)),     // Phone Allowance
@@ -113,33 +105,65 @@ public class CsvUtils {
     public static void addAllAttendanceRecord() {
         try {
             BufferedReader br = new BufferedReader(new FileReader(CSVFileNames.ATTENDANCE_CSV));
+
+            // This will read the first line and skip it.
+            br.readLine();
+
             String line;
-            boolean is_header = true;
+
+            // Continue reading the CSV file until all rows are read.
             while ((line = br.readLine()) != null) {
-                if (is_header) {
-                    is_header = false;
-                    continue;
-                }
-                String[] splitted_data = line.split(",");
-                ArrayList<String> processedColumn = new ArrayList<String>();
-                Collections.addAll(processedColumn, splitted_data);
-                Attendance attendance = new Attendance(Integer.parseInt(String.valueOf(processedColumn.get(0))),
-                        String.valueOf(processedColumn.get(1)),
-                        String.valueOf(processedColumn.get(2)),
-                        String.valueOf(processedColumn.get(3)),
-                        String.valueOf(processedColumn.get(4)),
-                        String.valueOf(processedColumn.get(5)));
-                Attendance.records.add(attendance);
+
+
+                // Split the line by commas to separate items
+                String[] rowData = line.split(","); // Separate items using a comma as the delimiter.
+
+                // Create a new ArrayList to store processed attendance data
+                ArrayList<String> attendanceProcessedData = new ArrayList<String>();
+
+                // Add the elements from rowData into attendanceProcessedData
+                Collections.addAll(attendanceProcessedData, rowData);
+
+                // Add new attendance to record
+                Attendance.records.add(
+                        new Attendance(
+                                Integer.parseInt(String.valueOf(attendanceProcessedData.get(0))), //Employee #
+                                String.valueOf(attendanceProcessedData.get(1)), //Last name
+                                String.valueOf(attendanceProcessedData.get(2)), // First name
+                                String.valueOf(attendanceProcessedData.get(3)), // Date
+                                String.valueOf(attendanceProcessedData.get(4)), // Time in
+                                String.valueOf(attendanceProcessedData.get(5))) // Time out
+                );
             }
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
     }
 
-    public static void updateByLineNumber(String filePath, int lineNumber, String[] newData) {
-        List<String> updatedLines = new ArrayList<>();
+    public static void addAllLeaves() {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(CSVFileNames.LEAVE_CSV));
+            br.readLine(); // This will read the first line and skip it.
+            String line;
 
-        int currentLineNumber = 0; // pass over headers
+            while ((line = br.readLine()) != null) {
+                String[] arr = line.split(",");
+
+                Leave newLeave = new Leave(Integer.valueOf(arr[0]), arr[1], arr[2], arr[3], arr[4]);
+
+                Leave.RECORDS.add(newLeave);
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void updateByLineNumber(String filePath, int lineNumber, String[] newData) {
+        List<String> updateLine = new ArrayList<>();
+
+        int currentLineNumber = 0;
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             int row = lineNumber - 1;
@@ -150,9 +174,9 @@ public class CsvUtils {
                         updatedLineBuilder.append(data).append(",");
                     }
                     String updatedLine = updatedLineBuilder.toString().trim(); // Trim trailing tab
-                    updatedLines.add(updatedLine);
+                    updateLine.add(updatedLine);
                 } else {
-                    updatedLines.add(line);
+                    updateLine.add(line);
                 }
                 currentLineNumber++;
             }
@@ -161,7 +185,7 @@ public class CsvUtils {
         }
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            for (String line : updatedLines) {
+            for (String line : updateLine) {
                 writer.write(line);
                 writer.newLine();
             }
@@ -191,7 +215,7 @@ public class CsvUtils {
                 }
             } else if (filepath.contains("Employee Details")) {
                 if (Employee.records.isEmpty()) Employee.addAllEmployees();
-                int[] employeesNumber = Employee.employeeNumbers();
+                int[] employeesNumber = Employee.arrEmployeeNumbers();
                 System.out.println("employees number length = " + employeesNumber.length);
                 if (Employee.records.isEmpty()) addAllEmployee();
                 for (int i = 0; i < employeesNumber.length; i++) {
@@ -216,7 +240,7 @@ public class CsvUtils {
             int currentLine = 0;
             while ((line = reader.readLine()) != null) {
                 currentLine++;
-                if (currentLine != lineNumber) { // increment lineNumber to pass over headers
+                if (currentLine != lineNumber) {
                     lines.add(line);
                 }
             }
@@ -224,14 +248,10 @@ public class CsvUtils {
             System.out.println("An error occurred while reading the file: " + e.getMessage());
         }
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filepath))) {
-            int add_new_line_counter = 0;
             for (String line : lines) {
                 writer.write(line);
                 writer.newLine();
-                add_new_line_counter++;
             }
-            System.out.println("i = " + add_new_line_counter);
-            System.out.println("Line deleted successfully.");
         } catch (IOException e) {
             System.out.println("An error occurred while deleting the line: " + e.getMessage());
         }
@@ -241,10 +261,9 @@ public class CsvUtils {
         List<String> updatedLines = new ArrayList<>();
         BufferedReader br = new BufferedReader(new FileReader(CSVFileNames.ATTENDANCE_CSV));
         String line;
-        boolean isHeader = true;
+
         while ((line = br.readLine()) != null) {
-            if (isHeader) {
-                isHeader = false;
+            if (line.contains("Employee #,Last Name,First Name,Date,Time-in,Time-out")) {
                 updatedLines.add("Employee #,Last Name,First Name,Date,Time-in,Time-out");
             } else if (line.equals(oldString)) {
                 StringBuilder updatedLineBuilder = new StringBuilder();
@@ -269,14 +288,5 @@ public class CsvUtils {
         } catch (IOException e) {
             System.out.println("An error occurred while updating the file: " + e.getMessage());
         }
-    }
-
-
-    public static String makeStringLengthToTwenty(String str) {
-        int maxLength = 20;
-
-        str = String.format("%-" + maxLength + "s", str);
-
-        return str;
     }
 }

@@ -10,4 +10,8 @@ public class IntegerUtil {
     public static int fixInteger(String inputInteger) {
         return removeComma(removeDoubleQuote(inputInteger));
     }
+
+    public static void main(String[] args) {
+
+    }
 }

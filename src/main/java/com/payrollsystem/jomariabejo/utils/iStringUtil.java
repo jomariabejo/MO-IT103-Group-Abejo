@@ -2,7 +2,7 @@ package com.payrollsystem.jomariabejo.utils;
 
 import java.text.DecimalFormat;
 
-public interface iStringUtils {
+public interface iStringUtil {
     /**
      * Checks the given string for the presence of a comma.
      * If not present, encloses the string with quotes using its first and last indices.
@@ -12,6 +12,11 @@ public interface iStringUtils {
      */
     default String encloseWithQuotes(String str) {
         return str.contains(",") ? str : "\"" + str + "\"";
+    }
+
+    default String toCommaSeparatedValue(String [] employeeLeaveDetails) {
+        // Connect each items
+        return String.join(",",employeeLeaveDetails);
     }
 
 
@@ -58,6 +63,48 @@ public interface iStringUtils {
 
     static String removeQuotes(String inputString) {
         return inputString.replaceAll("\"","");
+    }
+
+    static String addCommaToStrInt(String number) {
+        StringBuilder result = new StringBuilder(number);
+        int length = result.length();
+
+        for (int i = length - 3; i > 0; i -= 3) {
+            result.insert(i, ',');
+        }
+        return result.toString();
+    }
+
+    static String addCommaToStrFloat(String number) {
+        StringBuilder result = new StringBuilder(number);
+        int length = result.length();
+
+        result.delete(length - 3, length);
+
+        boolean initialComma = true;
+        for (int i = length - 3; i > 0; i -= 3) {
+            if (initialComma) initialComma = false;
+            else result.insert(i, ',');
+        }
+        return result.toString();
+    }
+
+    static String addCommaToStrInt(int number) {
+        StringBuilder result = new StringBuilder(number);
+        int length = result.length();
+
+        for (int i = length - 3; i > 0; i -= 3) {
+            result.insert(i, ',');
+        }
+
+        return result.toString();
+    }
+
+    static String addDoubleQuotesIfStringHasComma(String input) {
+        if (input.contains(",")) {
+            return "\"" + input + "\"";
+        }
+        return input;
     }
 
 }

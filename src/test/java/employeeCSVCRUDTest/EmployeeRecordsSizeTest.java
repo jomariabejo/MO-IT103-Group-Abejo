@@ -1,5 +1,5 @@
 import com.payrollsystem.jomariabejo.model.Employee;
-import com.payrollsystem.jomariabejo.utils.CsvUtils;
+import com.payrollsystem.jomariabejo.utils.CsvUtil;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -10,7 +10,7 @@ public class EmployeeRecordsSizeTest {
 
     @Test
     public void addAllEmployee() throws IOException {
-        CsvUtils.addAllEmployee();
+        CsvUtil.addAllEmployee();
         assertTrue(Employee.records.size() == 25);
     }
 }
